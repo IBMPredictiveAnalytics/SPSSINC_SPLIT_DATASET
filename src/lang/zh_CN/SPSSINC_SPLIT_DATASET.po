@@ -1,0 +1,154 @@
+#/***********************************************************************
+# * Licensed Materials - Property of IBM 
+# *
+# * IBM SPSS Products: Statistics Common
+# *
+# * (C) Copyright IBM Corp. 1989, 2014
+# *
+# * US Government Users Restricted Rights - Use, duplication or disclosure
+# * restricted by GSA ADP Schedule Contract with IBM Corp. 
+# ************************************************************************/
+
+# NLS_ENCODING=UTF-8
+# IBMUPYTH
+
+
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2014-05-21 17:51+China Standard Time\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: ENCODING\n"
+"Generated-By: pygettext.py 1.5\n"
+
+
+#: SPSSINC_SPLIT_DATASET.py:291
+msgid "---"
+msgstr ""
+"---"
+
+#: SPSSINC_SPLIT_DATASET.py:307
+msgid "FILENAME and NAMEPREFIX cannot be used together"
+msgstr ""
+"不得同时使用 FILENAME 和 NAMEPREFIX"
+
+#: SPSSINC_SPLIT_DATASET.py:309
+msgid "FILENAME and Names = Numbers cannot be used together"
+msgstr ""
+"不得同时使用 FILENAME 和“名称 = 数字”"
+
+#: SPSSINC_SPLIT_DATASET.py:389
+msgid "One or more of the split variables was not found.  Note that names are case sensitive"
+msgstr ""
+"找不到一个或多个拆分变量。请注意，名称区分大小写"
+
+#: SPSSINC_SPLIT_DATASET.py:403
+msgid "Split variable contains non-integer value: %f"
+msgstr ""
+"拆分变量包含非整数值：%f"
+
+#: SPSSINC_SPLIT_DATASET.py:451
+msgid "Split File Information"
+msgstr ""
+"拆分文件信息"
+
+#: SPSSINC_SPLIT_DATASET.py:452
+msgid "Settings and Statistics"
+msgstr ""
+"设置和统计"
+
+#: SPSSINC_SPLIT_DATASET.py:453
+msgid "Split Variable Names"
+msgstr ""
+"拆分变量名"
+
+#: SPSSINC_SPLIT_DATASET.py:454
+msgid "Output Directory"
+msgstr ""
+"输出目录"
+
+#: SPSSINC_SPLIT_DATASET.py:455
+msgid "Files Deleted"
+msgstr ""
+"删除的文件"
+
+#: SPSSINC_SPLIT_DATASET.py:456
+msgid "Files Written"
+msgstr ""
+"写入的文件"
+
+#: SPSSINC_SPLIT_DATASET.py:457
+msgid "File List"
+msgstr ""
+"文件列表"
+
+#: SPSSINC_SPLIT_DATASET.py:457
+msgid "None"
+msgstr ""
+"无"
+
+#: SPSSINC_SPLIT_DATASET.py:458
+msgid "Directories Cleared"
+msgstr ""
+"清空的目录"
+
+#: SPSSINC_SPLIT_DATASET.py:458
+msgid "No"
+msgstr ""
+"否"
+
+#: SPSSINC_SPLIT_DATASET.py:458
+msgid "Yes"
+msgstr ""
+"是"
+
+#: SPSSINC_SPLIT_DATASET.py:462
+msgid "Split Files Written"
+msgstr ""
+"写入的拆分文件"
+
+#: SPSSINC_SPLIT_DATASET.py:463
+msgid "Values and File Names for Split Files Written"
+msgstr ""
+"写入的拆分文件的值和文件名"
+
+#: SPSSINC_SPLIT_DATASET.py:464
+msgid "Data File"
+msgstr ""
+"数据文件"
+
+#: SPSSINC_SPLIT_DATASET.py:464
+msgid "Directory"
+msgstr ""
+"目录"
+
+#: SPSSINC_SPLIT_DATASET.py:464
+msgid "Values or Labels"
+msgstr ""
+"值或标签"
+
+#: SPSSINC_SPLIT_DATASET.py:465
+msgid "Based on Variables: %s"
+msgstr ""
+"基于变量：%s"
+
+#: SPSSINC_SPLIT_DATASET.py:504
+msgid "A variable reference was found in a directory or file name pattern that is not listed as a split variable: %s"
+msgstr ""
+"在目录或文件名模式中找到未列示为拆分变量的变量引用：%s"
+
+#: SPSSINC_SPLIT_DATASET.py:643
+msgid "Relative paths cannot be specified with a drive letter: %s"
+msgstr ""
+"不得指定带有盘符的相对路径：%s"
+
+
+
