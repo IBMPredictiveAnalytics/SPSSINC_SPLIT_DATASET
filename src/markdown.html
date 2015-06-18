@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>SPSSINC SPLIT DATASET</title>
+
+<link rel="stylesheet" type="text/css" href="extsyntax.css" />
+
+
+
+
+
+</head>
+
+<body>
+<h1>SPSSINC SPLIT DATASET</h1>
+
+<p>Write a collection of datasets with all the cases for each value of the split variable(s)
+in a different dataset</p>
+<div class="syntax">
+<p>SPSSINC SPLIT DATASET
+SPLITVAR=<em>variables</em><sup>&#42;</sup></p>
+
+<p>/OUTPUT<br/>
+DIRECTORY=&ldquo;<em>directory for output</em>&rdquo;<br/>
+DELETECONTENTS=NO<sup>&#42;&#42;</sup> or YES<br/>
+MAKETEMPDIR=NO<sup>&#42;&#42;</sup> ot YES<br/>
+FILENAME=&ldquo;<em>file name</em>&rdquo;  </p>
+
+<p>/OPTIONS NAMES=VALUES<sup>&#42;&#42;</sup> or LABELS or NUMBERS<br/>
+FILENAMESUBS=ASDIR<sup>&#42;&#42;</sup> or VALUES or LABELS<br/>
+NAMEPREFIX=&ldquo;<em>name prefix</em>&rdquo;<br/>
+PRINTLIST=YES<sup>&#42;&#42;</sup> or NO<br/>
+FILELIST=&ldquo;<em>file</em>&rdquo;</p>
+
+<p>/HELP]</p>
+
+<p><sup>&#42;</sup> Required<br/>
+<sup>&#42;&#42;</sup> Default</p>
+</div>
+<p>/HELP displays this help and does nothing else.</p>
+
+
+<pre class="example"><code>spssinc split dataset splitvar= educ
+/output directory=&quot;c:/temp/target&quot; deletecontents=yes
+/options names=values filelist=&quot;c:/temp/target/files.txt&quot; printlist=yes.
+</code></pre>
+
+<p>This command partitions the cases in the active dataset into a collection of 
+data files with all the cases for each value of the split variable(s) in a different file.
+In combination withe SPSSINC PROCESS FILES it generalizes the standard SPLIT FILES capability by
+allowing you to execute arbitrary blocks of syntax for each distinct split value.
+Data do not need to be sorted by the split variable for this command.</p>
+
+<p>The output file name is by default constructed from the variable values or labels
+with an underscore between parts if multiple variables are used.</p>
+
+<p><strong>FILENAME</strong> can be used to override these names.  It can be a pattern such as
+described below for directories.  It is always given a <em>sav</em> extension.
+System-missing values are written to a dataset named $Sysmis.sav.
+A blank string value will be written to a dataset named .sav  (no rootname).
+Such names are legal, but on some operating systems a directory listing will not show
+names starting with a period by default.</p>
+
+<p><strong>SPLITVAR</strong> names one or more string or numeric variables that define the splits.<br/>
+If numeric, the values must be integers.</p>
+
+<h2>OPTIONS</h2>
+
+<p><strong>DIRECTORY</strong> optionally names a directory for the output.  If not specified, the current
+working directory for the SPSS Processor is used.  The specified directory will be created
+if it does not already exist.</p>
+
+<p>The directory can be a simple path such as <code>&quot;c:\project\splits&quot;</code> or it can refer to some or
+all of the variables used in splitting.  To refer to a variable value, use the variable name
+in the path like this <code>&quot;${varname}&quot;</code>.  For example, if splitting by variables xvar and yvar,
+you could write</p>
+
+<pre><code>DIRECTORY = &quot;c:/mydata/abc${xvar}/${yvar}&quot;.  
+</code></pre>
+
+<p>If xvar has values &ldquo;xyz&rdquo; and &ldquo;KLM&rdquo; and
+yvar has values 1 and 2, then directories<br/>
+c:/mydata/abcxyz/1,<br/>
+c:/mydata/abcxyz/2,<br/>
+c:/mydata/abcKLM/1, and<br/>
+c:/mydata/abcKLM/2<br/>
+could be created and used.  Only value combinations actually occurring in the data will
+be created. </p>
+
+<p>On a case-insensitive file system such as used by Windows,
+the files created could be different from other systems.<br/>
+Characters typically not allowed in directory names are replaced with underscores (_).
+These are  &ldquo; * ? &lt; &gt; |</p>
+
+<p>If <strong>MAKETEMPDIR</strong> is specified, a new temporary directory is created and used for the
+output.  DIRECTORY must not be specified if this option is used.</p>
+
+<p><strong>DELETECONTENTS</strong> specifies whether all  SPSS sav files are removed before new files are
+written.  Use with caution!  It cannot be used if DIRECTORY is not specified.  If the directory specification
+includes variable substitutions, only directory references for values in the dataset being split
+will be cleared.</p>
+
+<p><strong>NAMES</strong> can specify VALUES, the default, or LABELS or NUMBERS.  It determines how
+the output directories and files are named.  For VALUES the file names are like value.sav, 
+for LABELS, the file names are like label.sav; for numbers, the file names are sequential numbers.
+If NAMES=NUMBERS and there is a directory pattern, the variable values are used
+to expand that pattern.  The NAMES setting determines whether values or labels are
+displayed in the detailed output pivot table.</p>
+
+<p>Characters in the values or labels that would be illegal in a file name, including those listed
+above and / or \, are replaced by the underscore character.
+If using LABELS, the value is used if there is no label.</p>
+
+<p>By default, the same NAMES choice is used for file names.  You can override this by
+specifying <strong>FILENAMESUBS</strong> = VALUES or LABELS.</p>
+
+<p>If <strong>NAMEPREFIX</strong> is specified, that text plus _ will be prefixed to the output file names.
+NAMEPREFIX cannot be combined with FILENAME.</p>
+
+<p>If specified, <strong>FILELIST</strong> names a file that will contain a list of all the files that were written
+along with the associated values.  This file can be used as input to SPSSINC PROCESS FILES.
+If file handles are in use, the paths in the log are expanded to the true names if using V18
+or later, but Viewer output is left in terms of the handles</p>
+
+<p>&copy; Copyright IBM Corp. 1989, 2014</p>
+
+</body>
+
+</html>
+
