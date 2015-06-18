@@ -1,0 +1,20 @@
+<Command xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extension.xsd" Name="SPSSINC SPLIT DATASET" Language="Python">
+	<Subcommand Name="" IsArbitrary="False" Occurrence="Optional">
+		<Parameter Name="SPLITVAR" ParameterType="VariableNameList"/>
+	</Subcommand>
+	<Subcommand Name="OPTIONS">
+		<Parameter Name="NAMES" ParameterType="Keyword"/>
+		<Parameter Name="FILENAMESUBS" ParameterType="Keyword"/>
+		<Parameter Name="FILELIST" ParameterType="OutputFile"/>
+		<Parameter Name="PRINTLIST" ParameterType="Keyword"/>
+		<Parameter Name="NAMEPREFIX" ParameterType="QuotedString"/>
+	</Subcommand>
+	<Subcommand Name="OUTPUT">
+		<Parameter Name="DIRECTORY" ParameterType="QuotedString"/>
+		<Parameter Name="DELETECONTENTS" ParameterType="Keyword"/>
+		<Parameter Name="FILENAME" ParameterType="QuotedString"/>
+
+		<Parameter Name="MAKETEMPDIR" ParameterType="Keyword"/>
+	</Subcommand>
+	<Subcommand Name="HELP" Occurrence="Optional"/>
+</Command>
