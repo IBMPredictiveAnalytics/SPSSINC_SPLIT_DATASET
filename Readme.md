@@ -1,11 +1,13 @@
 # SPSSINC SPLIT DATASET
-## Split a dataset into separate files according to splitting va
- This procedure partitions a dataset into a set of sav fil
+## Split a dataset into separate files according to splitting variables
+ This procedure partitions a dataset into a set of sav files according to the values of one or more splitting variables.  Used with SPSSINC PROCESS FILES, it provides a generalization of the built-in SPLIT FILES mechanism.
 
 ---
 Requirements
 ----
-- IBM SPSS Statistics 18 or later
+- IBM SPSS Statistics 18 or later and the corresponding IBM SPSS Statistics-Integration Plug-in for Python.
+
+Note: For users with IBM SPSS Statistics version 22 or higher, the SPSSINC SPLIT DATASET extension is installed as part of IBM SPSS Statistics-Essentials for Python.
 
 ---
 Installation intructions
