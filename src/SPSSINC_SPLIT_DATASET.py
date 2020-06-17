@@ -1,9 +1,9 @@
-from __future__ import with_statement
+
 
 """SPSSINC SPLIT DATASET extension command"""
 #Licensed Materials - Property of IBM
 #IBM SPSS Products: Statistics General
-#(c) Copyright IBM Corp. 2010, 2014
+#(c) Copyright IBM Corp. 2010, 2020
 #US Government Users Restricted Rights - Use, duplication or disclosure 
 #restricted by GSA ADP Schedule Contract with IBM Corp.
 __author__ =  'spss, JKP'
@@ -134,11 +134,11 @@ if not v19okay:
                 if len(rowlabels) > 0:
                     error.SetErrorCode(1032)
                     if error.IsError():
-                        raise SpssError,error
+                        raise SpssError(error)
                 elif len(collabels) > 0:
                     error.SetErrorCode(1032)
                     if error.IsError():
-                        raise SpssError,error
+                        raise SpssError(error)
 
             # Make a local copy. We don't want to change the original labels.
             tmpRowLabels = list(rowlabels)
@@ -146,7 +146,7 @@ if not v19okay:
         except TypeError:
             error.SetErrorCode(1004)
             if error.IsError():
-                raise SpssError,error
+                raise SpssError(error)
 
         # Check the structure of cells.
         nRows = 0
@@ -165,14 +165,14 @@ if not v19okay:
                 else:
                     nCols = 1
 
-        if tmpRowLabels <> [] and tmpColLabels <> []:
+        if tmpRowLabels != [] and tmpColLabels != []:
             nRows = len(tmpRowLabels)
             nCols = len(tmpColLabels)
-        elif tmpRowLabels <> []:
+        elif tmpRowLabels != []:
             nRows = len(tmpRowLabels)
             # If there are no labels for the column dimension, the length of the first cells item is used.
             tmpColLabels.extend(["col"+str(x) for x in range(nCols)])
-        elif tmpColLabels <> []:
+        elif tmpColLabels != []:
             nCols = len(tmpColLabels)
             # If there are no labels for the row dimension, the number of rows in Cells is used.
             tmpRowLabels.extend(["row"+str(x) for x in range(nRows)])
@@ -180,8 +180,8 @@ if not v19okay:
             tmpRowLabels.extend(["row"+str(x) for x in range(nRows)])
             tmpColLabels.extend(["col"+str(x) for x in range(nCols)])
 
-        tmpRowLabels = map(CellText._CellText__ToCellText,tmpRowLabels)
-        tmpColLabels = map(CellText._CellText__ToCellText,tmpColLabels)
+        tmpRowLabels = list(map(CellText._CellText__ToCellText,tmpRowLabels))
+        tmpColLabels = list(map(CellText._CellText__ToCellText,tmpColLabels))
 
         tmpCells = []
 
@@ -213,21 +213,21 @@ if not v19okay:
             except:
                 error.SetErrorCode(1032)
                 if error.IsError():
-                    raise SpssError, error
+                    raise SpssError(error)
 
         # Check if cells[i][j] or cells[i] is scalar (such as sequence).
         for x in tmpCells:
             ###if not isinstance(x,(str, time.struct_time, datetime.datetime, datetime.date)):
-            if not isinstance(x,(basestring, time.struct_time, datetime.datetime, datetime.date)):
+            if not isinstance(x,(str, time.struct_time, datetime.datetime, datetime.date)):
                 try:
                     [(i, x) for (i,x) in enumerate(x)]
                     error.SetErrorCode(1032)
                     if error.IsError():
-                        raise SpssError, error
+                        raise SpssError(error)
                 except TypeError:
                     pass
 
-        tmpCells = map(CellText._CellText__ToCellText,tmpCells)
+        tmpCells = list(map(CellText._CellText__ToCellText,tmpCells))
 
         # If dimension is empty, the dimension label is hidden.
         if rowdim == "":
@@ -239,7 +239,7 @@ if not v19okay:
         else:
             coldim = self.Append(Dimension.Place.column,coldim,False,False)
 
-        if tmpCells <> []:
+        if tmpCells != []:
             categories = [(row,col) for row in tmpRowLabels for col in tmpColLabels]
             for (i,cats) in enumerate(categories):
                 self[cats] = tmpCells[i]
@@ -257,7 +257,7 @@ def _safeval(val, quot='"'):
 def Run(args):
     """Execute the SPSSINC SPLIT DATASETS extension command"""
 
-    args = args[args.keys()[0]]
+    args = args[list(args.keys())[0]]
 
     oobj = Syntax([
         Template("SPLITVAR", subc="",  ktype="existingvarlist", var="varnames", islist=True),
@@ -293,7 +293,7 @@ def Run(args):
         def _(msg):
             return msg
     # A HELP subcommand overrides all else
-    if args.has_key("HELP"):
+    if "HELP" in args:
         #print helptext
         helper()
     else:
@@ -313,7 +313,7 @@ def helper():
     # webbrowser.open seems not to work well
     browser = webbrowser.get()
     if not browser.open_new(helpspec):
-        print("Help file not found:" + helpspec)
+        print(("Help file not found:" + helpspec))
 try:    #override
     from extension import helper
 except:
@@ -340,11 +340,11 @@ def makesplits(varnames, directory=None, deletecontents=False, maketempdir = Fal
         for i, v in enumerate(value):
             if isinstance(v, (int, float)):
                 if not keepnumeric:
-                    value[i]=  unicode(v)
+                    value[i]=  str(v)
             elif v is None:
                 pass
-            elif not isinstance(v, unicode):
-                value[i] = unicode(v, myenc)
+            elif not isinstance(v, str):
+                value[i] = str(v, myenc)
         if isseq:
             return value
         else:
@@ -410,7 +410,7 @@ DATASET ACTIVATE %(dsn)s.""" % locals())
             raise ValueError(_("One or more of the split variables was not found.  Note that names are case sensitive"))
         vldict = [vardict[v.VariableName].ValueLabels for v in vardict]  # a list of value label dictionaries
         # ensure that everything is properly unicoded
-        vldict = [dict((unicodeit(k), unicodeit(v)) for k, v in item.iteritems()) for item in vldict]
+        vldict = [dict((unicodeit(k), unicodeit(v)) for k, v in item.items()) for item in vldict]
     else:
         vldict = [{}]
 
@@ -419,7 +419,7 @@ DATASET ACTIVATE %(dsn)s.""" % locals())
 
     for row, case in enumerate(cases):
         for v, vval in enumerate(case):
-            if not isinstance(vval, basestring) and vval is not None:
+            if not isinstance(vval, str) and vval is not None:
                 if int(vval) != vval:
                     raise ValueError(_("Split variable contains non-integer value: %f") % vval)
 
@@ -494,13 +494,13 @@ DATASET ACTIVATE %(dsn)s.""" % locals())
 
 def unistr(value, myenc):
     """return unicode value for a unicode object, a number, or a code page object"""
-    if isinstance(value, unicode):
+    if isinstance(value, str):
         return value
     if isinstance(value, (float, int)):
-        return unicode(value)
+        return str(value)
     if value is None:
-        return u"$Sysmis"
-    return unicode(value, myenc)
+        return "$Sysmis"
+    return str(value, myenc)
 
 def str18(item):
     if v19okay:
@@ -568,7 +568,7 @@ class filename(object):
 
         nvalues = []
         for v in values:
-            if isinstance(v, basestring):
+            if isinstance(v, str):
                 nvalues.append(v.rstrip())
             elif v is None:
                 nvalues.append("$Sysmis")
@@ -577,20 +577,20 @@ class filename(object):
         values = nvalues
 
         if self.names in ["values", "numbers"]:
-            d = dict(zip(self.varnames, values))
+            d = dict(list(zip(self.varnames, values)))
             valuelist = ", ".join(values)
         else:
             labels = [self.vldict[i].get(value, value) for i, value in enumerate(values)]
-            d = dict(zip(self.varnames, labels))
+            d = dict(list(zip(self.varnames, labels)))
             valuelist = ", ".join(labels)
         if self.names == self.fnames:   # same substitution mode for directories and filenames
             fd = d
         else:
             if self.fnames in ["values", "numbers"]:
-                fd = dict(zip(self.varnames, values))
+                fd = dict(list(zip(self.varnames, values)))
             else:
                 labels = [self.vldict[i].get(value, value) for i, value in enumerate(values)]
-                fd = dict(zip(self.varnames, labels))
+                fd = dict(list(zip(self.varnames, labels)))
                 
         if self.fnspec.s:
             fn = self.fnspec.substitute(fd)
@@ -632,7 +632,7 @@ class filename(object):
                 for f in glob.iglob(os.path.join(actualdir, "*.sav")):
                     os.remove(f)
                     self.delcount += 1
-        return valuelist, fnv, '"' +  _safeval(os.path.join(actualdir, self.nameprefix  + fn + ".sav")) + '"', self.nameprefix + fn + u".sav"
+        return valuelist, fnv, '"' +  _safeval(os.path.join(actualdir, self.nameprefix  + fn + ".sav")) + '"', self.nameprefix + fn + ".sav"
 
 def makeexpr(varnames, values):
     """Return conditional for this split and value string for output
@@ -642,7 +642,7 @@ def makeexpr(varnames, values):
 
     crit = []
     for var, value in zip(varnames, values):
-        if isinstance(value, basestring):
+        if isinstance(value, str):
             expression = var + ' EQ "' + _safeval(value) +'"'
         elif value is None:
             expression = "SYSMIS(%s)" % var
@@ -752,11 +752,11 @@ class NonProcPivotTable(object):
 def attributesFromDict(d):
     """build self attributes from a dictionary d."""
     self = d.pop('self')
-    for name, value in d.iteritems():
+    for name, value in d.items():
         setattr(self, name, value)
 
 escapemapping = \
-              {"\t": r"\t", "\n":r"\n", "\r": r"\r", "\'":r"\'", "\a":r"\a","\b":r"\b", "\f":r"\f","\N":r"\N", "\v":r"\v"}
+              {"\t": r"\t", "\n":r"\n", "\r": r"\r", "\'":r"\'", "\a":r"\a","\b":r"\b", "\f":r"\f","\\N":r"\N", "\v":r"\v"}
 
 def unescape(item):
     "repair any escape sequences generated by the UP"

@@ -2,7 +2,7 @@ Name: SPSSINC SPLIT DATASET
 Dialog-Specs: SPSSINC_SPLIT_DATASET.spd
 Command-Specs: SPSSINC_SPLIT_DATASET.xml
 Code-Files: SPSSINC_SPLIT_DATASET.py
-Misc-Files: markdown.html,extsyntax.css,IBMdialogicon.png
+Misc-Files: extsyntax.css,IBMdialogicon.png,markdown.html
 Summary: Split a dataset into separate files according to splitting va
  riables
 Description: This procedure partitions a dataset into a set of sav fil
@@ -10,8 +10,10 @@ Description: This procedure partitions a dataset into a set of sav fil
  with SPSSINC PROCESS FILES, it provides a generalization of the built
  -in SPLIT FILES mechanism.
 Author: JKP, IBM SPSS
-Version: 1.2.7
-Product-Version: 18
+Version: 2.0.0
+Product-Version: 24
 Date: 1/2/2014
+Product-Version-Maximum: 99
 Plugins: Python
+Python-Version: 3
 Translation-Catalogues: lang
