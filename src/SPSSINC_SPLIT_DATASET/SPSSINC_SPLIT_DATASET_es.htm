@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=utf-8">
+
+  <title>Dividir el conjunto de datos activo en una colección de archivos SAV basado en una variable</title>
+  <style type="text/css">
+
+  <!-- 
+
+  H1 {font-weight:bold; color:#006699; font-size:125%; }
+  H2 {font-weight:bold; color:#006699; font-size:110%; }
+  TABLE {font-size:100%;}
+
+  /* paragraph tags */
+  .step {text-indent: -1.3em; margin-left:1.3em; margin-top: 0px;}
+  .menuselection {margin-left:10px}
+  .bullet {list-style-type: disc;margin-top:12px; margin-left:36px; text-indent:-1em; }
+  .codeblock {background-color: #ffffe6; display:block; margin-left:5px; padding:5px;}
+
+  /* inline tags */
+  .screen {font-weight:bold; color:#408080}                       /*** used refer to on-screen text ***/
+  .name {font-style: italic}                                                       /*** used to tag names, such as variable names, file names, and so forth ***/
+  .runinhead {font-weight: bold} 
+  .superscript {vertical-align:super; font-size:80%}
+  .subscript {vertical-align:sub; font-size:80%}
+
+
+  --> 
+  </style>
+</head>
+
+<body>
+  <h1>Cree un conjunto de archivos SAV dividiendo el conjunto de datos activo.</h1>Este procedimiento funciona de forma similar al comando SPLIT FILES, pero graba las divisiones en nuevos archivos SAV en lugar de definir grupos para ser procesados por separado por los procedimientos. Esto es especialmente útil cuando la transformación y/o la sintaxis del procedimiento se debe aplicar por separado a cada grupo. El comando de extensión SPSSINC PROCESS FILES o el recuadro de diálogo equivalente   Utilidades&gt;Archivos de proceso se puede utilizar con la salida de este procedimiento sin las restricciones del método SPLIT FILES.
+
+  <p><span class="runinhead">Dividir casos por.</span> Elija una o más   variables para utilizar para dividir los datos activo en un conjunto de archivos. Las variables pueden ser cadenas o números. Las variables numéricas deben tener valores enteros. El diálogo no visualiza las variables con un nivel de medición de escala.</p>
+
+  <p><span class="runinhead">Ubicación de resultado.</span> Los archivos de salida se pueden grabar en un directorio especificado, que se creará si es necesario, o puede hacer que el comando cree un nuevo directorio temporal y escribir los archivos aquí. Seleccione el botón de opción apropiado. Si especifica un directorio, selecciónelo en <span class=".screen">Directorio de archivo de salida</span>. Dicho control debe estar vacío si opta por utilizar un directorio temporal.</p>
+
+  <p class="bullet">• El directorio temporal no se elimina al final del trabajo.</p>
+
+  <p>Puede especificar un patrón que utiliza los valores o las etiquetas de las variables de segmentación para poder direccionar los archivos de salida a directorios basándose en los valores o las etiquetas de división. Para hacer referencia a las variables de segmentación, nómbrelas como ${variable nombre} en la especificación de directorio. Por ejemplo, si divide por la variable xvar que tiene los valores "a" y "b", escriba<br>
+  c:/target/x${xvar}<br>
+  así se escribirán los archivos en /target/xa o /target/xb según los valores xvar.</p>
+
+  <p>Puede utilizar tantas referencias de variable como sean necesarias. Los directorios se crearán según sea necesario. Sólo se crean para los valores reales encontrados en los datos. El mecanismo de la plantilla de patrón también se puede utilizar para nombres de archivo.</p>
+
+  <p class="bullet">•Los caracteres que no están permitidos en nombres de directorio o de archivo como, por ejemplo, " se sustituirán por un subrayado (_).</p>
+
+  <p class="bullet">•Los resultados pueden diferir entre los sistemas de archivo donde los nombres de directorios y de archivos distinguen entre mayúsculas y minúsculas y los que no hacen esta distinción como, por ejemplo en Windows.</p>
+
+  <p><span class="runinhead">Suprimir archivos SAV existentes del directorio de destino.</span> Si utiliza un directorio especificado explícitamente, puede eliminar todos los archivos SAV existentes del destino antes de que se generen nuevos archivos. Esto puede reducir el desorden y hacer que sea más fácil procesar estos archivos como un grupo más tarde, pero asegúrese de que comprende lo que se suprimirá. Con patrones, sólo se borran los directorios para los valores de patrón que se producen realmente en el conjunto de datos.</p>
+
+  <p><span class="runinhead">Nombres de archivo de resultado.</span>De forma predeterminada, los nombres de archivo de salida se construirán combinando los valores o las etiquetas de todas las variables de segmentación, separadas por un subrayado.
+  Puede alterar esto con un nombre de archivo fijo o un patrón como se describe para los directorios. Se añadirá automáticamente la extensión .sav.</p>
+
+  <p class="bullet">•Un nombre de archivo fijo se debe combinar con un patrón de directorio, o todos los datos se escribirán en el mismo archivo.</p>
+
+  <p><span class="runinhead">Archivo de listado de resultado.</span> Entre una especificación de archivo para crear un archivo que lista todos los archivos SAV creados por el comando. Contiene la ruta completa del archivo y el valor de división para dicho archivo. Esto facilita el uso del resultado de este procedimiento en el proceso posterior del conjunto de archivos o para el registro. El archivo se graba en la codificación Unicode utf-8.</p>
+
+  <h2>Opciones</h2>Utilice el subdiálogo Opciones para especificar la base para denominar los archivos de resultado y para especificar si se va a mostrar la lista de archivos en el visor.
+
+  <p><span class="runinhead">Nombres de archivo de resultado.</span> Los nombres de archivo se pueden generar de tres formas:</p>
+
+  <p class="bullet">• Mediante los valores de las variables de segmentación. Los nombres de archivo tienen el formato <i>valor1_valor2</i>.sav, por ejmplo, con dos variables. Si un valor es un valor perdido del sistema, el nombre raíz será <i>$Sysmis</i>. Para las variables de cadena, un valor en blanco genera un archivo llamado simplemente <i>.sav</i>. Este es un nombre de archivo legal, pero en algunos sistemas operativos, no aparecerá en un listado de directorios de forma predeterminada. Si se utiliza un patrón, los valores de la variable se utilizan en sustitución en el patrón.</p>
+
+  <p class="bullet">• Mediante las etiquetas de valor de las variables de segmentación.
+  Las etiquetas de valor para los valores de división se utilizan como el nombre raíz.
+  Si no hay ninguna etiqueta, se utiliza el valor en su lugar. Si se utiliza un patrón, las etiquetas de valor se utilizan en sustitución en el patrón.</p>
+
+  <p class="bullet">• Mediante un número secuencial. Los nombres raíz de archivo van de   0001 al número mayor necesario. Esta opción es útil si los valores o las etiquetas van a producir nombres difíciles. Esta opción no se puede utilizar si se especifica un nombre de archivo.</p>
+
+  <p>Los caracteres que no serían válidos en un nombre de archivo en algún sistema operativo son sustituidos por espacios en blanco. Esto incluye ", /, \,   &lt;, &gt;, *, y ?.</p>
+
+  <p><span class="runinhead">Prefijo de nombre.</span> Marque este recuadro para incluir el texto siguiente como el inicio de cada nombre raíz. El resto del nombre se determinará mediante el valor de los nombres de archivo de resultado separados por un subrayado.</p>
+
+  <p class="bullet">•Esta opción no se puede utilizar con un patrón.</p>
+
+  <p><span class="runinhead">Mostrar lista de archivos grabados.</span>
+  Marque este recuadro para generar un listado en el visor de los archivos grabados y los valores de variable de segmentación asociados.</p>
+
+  <h2>Características adicionales</h2>Ejecute el comando<br>
+  SPSSINC SPLIT DATASET /HELP.<br>
+  para mostrar toda la descripción de la sintaxis. Mediante el uso de la sintaxis, el resultado se puede grabar en el directorio de trabajo actual del procesador SPSS. El comando SHOW DIRECTORY muestra cual es el directorio.
+
+  <p>El número de pases de datos necesario para generar los archivos SAV depende de la versión de IBM SPSS Statistics. Para la versión 17, se producen 10   archivos SAV por pase. En versiones posteriores, se generan 64 a la vez.</p>
+
+  <h2>Requisitos</h2>Este comando requiere el complemento de programabilidad Python. Puede encontrar el complemento Python en el CD de IBM SPSS Statistics, o puede descargarlo desde la comunidad SPSS en www.ibm.com/developerworks/spssdevcentral.
+  <hr>
+
+  <p style="font-size:80%;">© Copyright IBM Corp. 1989, 2013</p>
+</body>
+</html>

@@ -1,154 +1,97 @@
-#/***********************************************************************
-# * Licensed Materials - Property of IBM 
-# *
-# * IBM SPSS Products: Statistics Common
-# *
-# * (C) Copyright IBM Corp. 1989, 2014
-# *
-# * US Government Users Restricted Rights - Use, duplication or disclosure
-# * restricted by GSA ADP Schedule Contract with IBM Corp. 
-# ************************************************************************/
-
-# NLS_ENCODING=UTF-8
-# IBMUPYTH
-
-
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR ORGANIZATION
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Translations template for PROJECT.
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
+
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-05-21 17:51+China Standard Time\n"
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-10-11 00:53-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: ENCODING\n"
-"Generated-By: pygettext.py 1.5\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Globalization Pipeline\n"
 
-
-#: SPSSINC_SPLIT_DATASET.py:291
 msgid "---"
-msgstr ""
-"---"
+msgstr "---"
 
-#: SPSSINC_SPLIT_DATASET.py:307
 msgid "FILENAME and NAMEPREFIX cannot be used together"
-msgstr ""
-"FILENAME i NAMEPREFIX nie można używać razem"
+msgstr "FILENAME i NAMEPREFIX nie można używać razem"
 
-#: SPSSINC_SPLIT_DATASET.py:309
 msgid "FILENAME and Names = Numbers cannot be used together"
-msgstr ""
-"FILENAME i Names = Numbers nie można używać razem"
+msgstr "FILENAME i Names = Numbers nie można używać razem"
 
-#: SPSSINC_SPLIT_DATASET.py:389
-msgid "One or more of the split variables was not found.  Note that names are case sensitive"
+msgid ""
+"One or more of the split variables was not found.  Note that names are case "
 msgstr ""
-"Nie znaleziono jednej lub większej liczby zmiennych podziału. Uwaga: w nazwach rozróżniana jest wielkość liter"
+"Nie znaleziono jednej lub większej liczby zmiennych podziału. Uwaga: w nazwach"
+" rozróżniana jest wielkość liter"
 
-#: SPSSINC_SPLIT_DATASET.py:403
 msgid "Split variable contains non-integer value: %f"
-msgstr ""
-"Zmienna podziału zawiera wartość niecałkowitą: %f"
+msgstr "Zmienna podziału zawiera wartość niecałkowitą: %f"
 
-#: SPSSINC_SPLIT_DATASET.py:451
 msgid "Split File Information"
-msgstr ""
-"Informacje o pliku podzielonym"
+msgstr "Informacje o pliku podzielonym"
 
-#: SPSSINC_SPLIT_DATASET.py:452
 msgid "Settings and Statistics"
-msgstr ""
-"Ustawienia i statystyki"
+msgstr "Ustawienia i statystyki"
 
-#: SPSSINC_SPLIT_DATASET.py:453
 msgid "Split Variable Names"
-msgstr ""
-"Nazwy zmiennych podziału"
+msgstr "Nazwy zmiennych podziału"
 
-#: SPSSINC_SPLIT_DATASET.py:454
 msgid "Output Directory"
-msgstr ""
-"Katalog wynikowy"
+msgstr "Katalog wynikowy"
 
-#: SPSSINC_SPLIT_DATASET.py:455
 msgid "Files Deleted"
-msgstr ""
-"Pliki usunięte"
+msgstr "Pliki usunięte"
 
-#: SPSSINC_SPLIT_DATASET.py:456
 msgid "Files Written"
-msgstr ""
-"Pliki zapisane"
+msgstr "Pliki zapisane"
 
-#: SPSSINC_SPLIT_DATASET.py:457
 msgid "File List"
-msgstr ""
-"Lista plików"
+msgstr "Lista plików"
 
-#: SPSSINC_SPLIT_DATASET.py:457
 msgid "None"
-msgstr ""
-"Brak"
+msgstr "Brak"
 
-#: SPSSINC_SPLIT_DATASET.py:458
 msgid "Directories Cleared"
-msgstr ""
-"Wyczyszczone katalogi"
+msgstr "Wyczyszczone katalogi"
 
-#: SPSSINC_SPLIT_DATASET.py:458
 msgid "No"
-msgstr ""
-"Nie"
+msgstr "Nie"
 
-#: SPSSINC_SPLIT_DATASET.py:458
 msgid "Yes"
-msgstr ""
-"Tak"
+msgstr "Tak"
 
-#: SPSSINC_SPLIT_DATASET.py:462
 msgid "Split Files Written"
-msgstr ""
-"Zapisane pliki podzielone"
+msgstr "Zapisane pliki podzielone"
 
-#: SPSSINC_SPLIT_DATASET.py:463
 msgid "Values and File Names for Split Files Written"
-msgstr ""
-"Wartości i nazwy plików dla zapisanych plików podzielonych"
+msgstr "Wartości i nazwy plików dla zapisanych plików podzielonych"
 
-#: SPSSINC_SPLIT_DATASET.py:464
 msgid "Data File"
-msgstr ""
-"Plik z danymi"
+msgstr "Plik z danymi"
 
-#: SPSSINC_SPLIT_DATASET.py:464
 msgid "Directory"
-msgstr ""
-"Katalog"
+msgstr "Katalog"
 
-#: SPSSINC_SPLIT_DATASET.py:464
 msgid "Values or Labels"
-msgstr ""
-"Wartości lub etykiety"
+msgstr "Wartości lub etykiety"
 
-#: SPSSINC_SPLIT_DATASET.py:465
 msgid "Based on Variables: %s"
-msgstr ""
-"Na podstawie zmiennych: %s"
+msgstr "Na podstawie zmiennych: %s"
 
-#: SPSSINC_SPLIT_DATASET.py:504
-msgid "A variable reference was found in a directory or file name pattern that is not listed as a split variable: %s"
+msgid ""
+"A variable reference was found in a directory or file name pattern that is not"
+" listed as a split variable: %s"
 msgstr ""
-"We wzorcu nazwy katalogu lub pliku znaleziono odwołanie do zmiennej, która nie jest widoczna na liście zmiennych podziału: %s"
+"We wzorcu nazwy katalogu lub pliku znaleziono odwołanie do zmiennej, która nie"
+" jest widoczna na liście zmiennych podziału: %s"
 
-#: SPSSINC_SPLIT_DATASET.py:643
 msgid "Relative paths cannot be specified with a drive letter: %s"
-msgstr ""
-"Ścieżki względne nie mogą być określane z literą napędu: %s"
-
-
-
+msgstr "Ścieżki względne nie mogą być określane z literą napędu: %s"

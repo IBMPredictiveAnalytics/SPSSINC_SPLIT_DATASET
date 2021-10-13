@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=utf-8">
+
+  <title>Suddividi il dataset attivo in una raccolta di file SAV basati su una variabile</title>
+  <style type="text/css">
+
+  <!-- 
+
+  H1 {font-weight:bold; color:#006699; font-size:125%; }
+  H2 {font-weight:bold; color:#006699; font-size:110%; }
+  TABLE {font-size:100%;}
+
+  /* paragraph tags */
+  .step {text-indent: -1.3em; margin-left:1.3em; margin-top: 0px;}
+  .menuselection {margin-left:10px}
+  .bullet {list-style-type: disc;margin-top:12px; margin-left:36px; text-indent:-1em; }
+  .codeblock {background-color: #ffffe6; display:block; margin-left:5px; padding:5px;}
+
+  /* inline tags */
+  .screen {font-weight:bold; color:#408080}                       /*** used refer to on-screen text ***/
+  .name {font-style: italic}                                                       /*** used to tag names, such as variable names, file names, and so forth ***/
+  .runinhead {font-weight: bold} 
+  .superscript {vertical-align:super; font-size:80%}
+  .subscript {vertical-align:sub; font-size:80%}
+
+
+  --> 
+  </style>
+</head>
+
+<body>
+  <h1>Crea un insieme di file SAV suddividendo il dataset attivo</h1>Questo procedura funziona in modo analogo al comando
+  SPLIT FILES, ma scrive le suddivisioni in nuovi file SAV invece di
+  definire i gruppi da elaborare separatamente mediante le procedure. Ciò è particolarmente utile quando è necessario applicare
+  un blocco di sintassi di trasformazione e/o procedura a ciascun
+  gruppo. Il comando di estensione SPSSINC PROCESS FILES o la finestra
+  di dialogo equivalente Programmi di utilità&gt;Elabora file possono essere utilizzati da questa
+procedura senza le limitazioni del metodo SPLIT FILES.
+
+  <p><span class="runinhead">Suddividi casi per.</span> Scegliere una o
+  più variabili da utilizzare per suddividere i dati attivi in un
+insieme di file. Le variabili possono essere di tipo stringa o numeriche. Le variabili numeriche devono avere valori interi. Nella finestra di dialogo
+non vengono visualizzate le variabili con un livello di misurazione della scala.</p>
+
+  <p><span class="runinhead">Ubicazione output.</span> I file di
+  output possono essere scritti in una specifica cartella, che
+verrà creata se necessario, oppure è possibile fare in modo che
+  il comando crei una nuova cartella temporanea e scriva i file al suo interno. Selezionare il pulsante di scelta appropriato. Se
+si specifica una cartella, selezionarla in <span class=".screen">Cartella file di output</span>. Tale
+  controllo deve essere vuoto se si sceglie di utilizzare una cartella temporanea.</p>
+
+  <p class="bullet">• La cartella temporanea non viene rimossa alla fine del lavoro.</p>
+
+  <p>È possibile specificare un modello che utilizza i valori o le etichette
+  delle variabili di suddivisione per instradare i file di output alle
+  cartelle in base alle etichette o ai valori di suddivisione. Per fare
+  riferimento alle variabili di suddivisione, indicarle
+  come ${variable name} nella specifica di cartella. Ad esempio, se
+  si esegue la suddivisione in base alla variabile xvar che ha i valori "a"
+  e "b", scrivere<br>
+  c:/target/x${xvar}<br>
+  questo scriverà i file in /target/xa oppure /target/xb, in base ai
+  valori xvar.</p>
+
+  <p>È possibile utilizzare tutti i riferimenti variabile necessari. Le cartelle
+  verranno create come necessario. Vengono create solo per i valori
+  effettivi trovati nei dati. Per i nomi file è anche possibile utilizzare
+  il meccanismo del modello di schema.</p>
+
+  <p class="bullet">• I caratteri che non sono consentiti nei nomi di cartella o
+  file, come ", saranno sostituiti da un carattere di sottolineatura (_).</p>
+
+  <p class="bullet">• I risultati possono variare tra i file system dove
+  i nomi di cartelle e file sono sensibili a maiuscolo/minuscolo e
+  quelli, come Windows, che non lo sono.</p>
+
+  <p><span class="runinhead">Elimina i file SAV esistenti dalla
+  cartella di destinazione.</span> Se si utilizza una
+  cartella specificata esplicitamente, è possibile rimuovere tutti
+  i file SAV esistenti dalla destinazione prima che vengano generati
+nuovi file. Ciò può ridurre l'ingombro e semplificare l'elaborazione
+  di questi file come un gruppo successivamente; accertarsi però
+  di comprendere cosa verrà eliminato. Con i modelli, i dati dalle cartelle
+  vengono cancellati solo per i valori di modello che ricorrono
+  effettivamente nel dataset.</p>
+
+  <p><span class="runinhead">Nomi file di output.</span>Per impostazione
+  predefinita, i nomi file di output verranno creati combinando i valori o le etichette di tutte
+le variabili di suddivisione, separati da un carattere di sottolineatura.
+  È possibile sovrascrivere questa impostazione con un nome file fisso
+  o un modello, come descritto per le cartelle. Verrà aggiunta automaticamente l'estensione .sav.</p>
+
+  <p class="bullet">• Un nome file fisso deve essere combinato con
+  un modello di cartella oppure tutti i dati verranno scritti nello
+  stesso file.</p>
+
+  <p><span class="runinhead">File di listing di output.</span> Immettere
+  una specifica del file per creare un file che elenchi tutti i file
+  SAV creati dal comando. Contiene il percorso completo del file
+  e il valore di suddivisione per tale file. Ciò facilita
+  l'utilizzo dell'output di questa procedura nell'elaborazione
+  successiva dell'insieme di file oppure per la registrazione. Il file viene scritto
+nella codifica Unicode utf-8.</p>
+
+  <h2>Opzioni</h2>Utilizzare la finestra di dialogo secondaria Opzioni per
+specificare la base per denominare i file di output e se visualizzare
+l'elenco di file nel Visualizzatore
+
+  <p><span class="runinhead">Nomi file di output.</span> I nomi file possono essere generati in tre modi:</p>
+
+  <p class="bullet">• In base ai valori delle variabili di suddivisione. I
+  nomi file hanno il formato <i>valore1_valore2</i>.sav, ad esempio,
+  con due variabili. Se un valore è mancante di sistema, il nome radice sarà <i>$Sysmis</i>. Per le variabili stringa
+un valore vuoto produce un file denominato semplicemente <i>.sav</i>. Si tratta di un nome
+  file consentito ma, per impostazione predefinita, su alcuni sistemi operativi non sarà visualizzato
+  in un elenco di cartella. Se viene utilizzato
+  un modello, i valori di variabile vengono utilizzati in sostituzione nel modello.</p>
+
+  <p class="bullet">• In base alle etichette di valore delle variabili di suddivisione.
+  Le etichette valore per i valori di suddivisione sono utilizzate come nome radice.
+  In assenza di etichetta, viene utilizzato il valore. Se si utilizza
+  un modello, le etichette valore vengono utilizzate in sostituzione nel modello.</p>
+
+  <p class="bullet">• In base a un numero sequenziale. I nomi radice dei file
+  vanno da 0001 al numero più grande necessario. Questa opzione è utile
+  se i valori o le etichette produrrebbero nomi strani. Questa opzione non può essere utilizzata
+se si specifica un nome file.</p>
+
+  <p>I caratteri che non sarebbero validi in un nome file o in
+  qualche sistema operativo vengono sostituiti da spazi. Sono inclusi ", /, \,
+  &lt;, &gt;, * e ?.</p>
+
+  <p><span class="runinhead">Prefisso nome.</span> Selezionare questa
+  casella per includere il testo di seguito come inizio di ciascun
+  nome radice. Il resto del nome sarà determinato dall'impostazione dei
+  nomi file di output, separato da un carattere di sottolineatura.</p>
+
+  <p class="bullet">• Questa opzione non può essere utilizzata con un modello.</p>
+
+  <p><span class="runinhead">Visualizza elenco di file scritti.</span>
+  Selezionare questa casella per produrre un elenco nel Visualizzatore dei
+  file scritti e dei valori di variabile di suddivisione associati.</p>
+
+  <h2>Funzioni aggiuntive</h2>Eseguire il comando<br>
+  SPSSINC SPLIT DATASET /HELP.<br>
+  per visualizzare la descrizione della sintassi completa. Utilizzando la sintassi,
+  l'output può essere scritto nella cartella di lavoro corrente del
+  processore SPSS. Il comando SHOW DIRECTORY visualizza cos'è la
+  cartella in questione.
+
+  <p>Il numero di passaggi di dati richiesto per produrre i file SAV
+  dipende dalla versione di IBM SPSS Statistics in uso. Per la versione 17
+ possono essere prodotti 10 file SAV per ogni passaggio. Nelle versioni successive ne vengono prodotti 64 per volta.</p>
+
+  <h2>Requisiti</h2>Questo comando richiede il plug-in Python Programmability.
+Il plug-in Python è disponibile sul CD di IBM SPSS Statistics CD oppure è possibile scaricarlo da
+SPSS Community all'indirizzo www.ibm.com/developerworks/spssdevcentral.
+  <hr>
+
+  <p style="font-size:80%;">© Copyright IBM Corp. 1989, 2013</p>
+</body>
+</html>

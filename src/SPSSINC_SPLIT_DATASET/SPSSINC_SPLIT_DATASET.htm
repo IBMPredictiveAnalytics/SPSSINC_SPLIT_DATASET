@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=utf-8">
+
+  <title>Split the Active Dataset into a Collection of SAV Files
+  Based on a Variable</title>
+  <style type="text/css">
+
+  <!-- 
+
+  H1 {font-weight:bold; color:#006699; font-size:125%; }
+  H2 {font-weight:bold; color:#006699; font-size:110%; }
+  TABLE {font-size:100%;}
+
+  /* paragraph tags */
+  .step {text-indent: -1.3em; margin-left:1.3em; margin-top: 0px;}
+  .menuselection {margin-left:10px}
+  .bullet {list-style-type: disc;margin-top:12px; margin-left:36px; text-indent:-1em; }
+  .codeblock {background-color: #ffffe6; display:block; margin-left:5px; padding:5px;}
+
+  /* inline tags */
+  .screen {font-weight:bold; color:#408080}                       /*** used refer to on-screen text ***/
+  .name {font-style: italic}                                                       /*** used to tag names, such as variable names, file names, and so forth ***/
+  .runinhead {font-weight: bold} 
+  .superscript {vertical-align:super; font-size:80%}
+  .subscript {vertical-align:sub; font-size:80%}
+
+
+  --> 
+  </style>
+</head>
+
+<body>
+  <h1>Create a Set of SAV Files by Splitting the Active
+  Dataset</h1>This procedure works similarly to the SPLIT FILES
+  command, but it writes the splits to new SAV files rather than
+  defining groups to be processed separately by procedures. This is
+  especially useful when a block of transformation and/or procedure
+  syntax needs to be applied separately to each group. The
+  extension command SPSSINC PROCESS FILES or the equivalent dialog
+  box Utilities&gt;Process Files can be used with the output from
+  this procedure without the restrictions of the SPLIT FILES
+  method.
+
+  <p><span class="runinhead">Split Cases by.</span> Choose one or
+  more variables to use to split the active data into a set of
+  files. The variables may be string or numeric. Numeric variables
+  must have integer values. The dialog does not display variables
+  with a scale measurement level.</p>
+
+  <p><span class="runinhead">Output Location.</span> The output
+  files can be written to a specified directory, which will be
+  created if needed, or you can have the command create a new
+  temporary directory and write the files there. Check the
+  appropriate radio button. If specifying a directory, select it in
+  <span class=".screen">Output File Directory</span>. That control
+  must be empty if you choose to use a temporary directory.</p>
+
+  <p class="bullet">• The temporary directory is not removed at the
+  end of the job.</p>
+
+  <p>You can specify a pattern that uses the values or labels of
+  the split variables in order to route the output files to
+  directories based on the split values or labels. To refer to the
+  split variables refer to them as ${variable name} in the
+  directory specification. For example, if splitting by variable
+  xvar that has values "a" and "b", write<br>
+  c:/target/x${xvar}<br>
+  this will write files to /target/xa or /target/xb according to
+  the xvar values.</p>
+
+  <p>You can use as many variable references as needed. Directories
+  will be created as needed. They are only created for the actual
+  values found in the data. The pattern template mechanism can also
+  be used for file names.</p>
+
+  <p class="bullet">•Characters that are illegal in directory or
+  file names such as " will be replaced by an underscore (_).</p>
+
+  <p class="bullet">•Results may differ between file systems where
+  directories and file names are case sensitive and those, such as
+  Windows, that are not.</p>
+
+  <p><span class="runinhead">Delete existing SAV files from target
+  directory.</span> If using an explicitly specified directory, you
+  can remove all the existing SAV files from the target before new
+  files are generated. This can reduce clutter and make it easier
+  to process these files as a group later, but be sure that you
+  understand what will be deleted. With patterns, directories are
+  only cleared for pattern values actually occuring in the
+  dataset.</p>
+
+  <p><span class="runinhead">Output File Names.</span>By default,
+  output file names will be constructed by combining the values or
+  labels of all the split variables, separated by an underscore.
+  You can override this with a fixed file name or a pattern such as
+  described for directories. A .sav extension will automatically be
+  added.</p>
+
+  <p class="bullet">•A fixed file name should be combined with a
+  directory pattern, or all the data will be written to the same
+  file.</p>
+
+  <p><span class="runinhead">Output Listing File.</span> Enter a
+  file specification to create a file that lists all of the SAV
+  files created by the command. It contains the full path to the
+  file and the split value for that file. This facilitates using
+  the output of this procedure in subsequent processing of the set
+  of files or for logging. The file is written in the Unicode utf-8
+  encoding.</p>
+
+  <h2>Options</h2>Use the Options subdialog to specify the basis
+  for naming the output files and whether to display the list of
+  files in the Viewer
+
+  <p><span class="runinhead">Output File Names.</span> File names
+  can be generated in three ways:</p>
+
+  <p class="bullet">• By the values of the split variables. The
+  file names have the form <i>value1_value2</i>.sav, for example,
+  with two variables. If a value is system missing, the rootname
+  will be <i>$Sysmis</i>. For string variables, a blank value
+  produces a file named just <i>.sav</i>. This is a legal file
+  name, but on some operating systems, it will not appear in a
+  directory listing by default. If a pattern is used, the variable
+  values are used in substitution in the pattern.</p>
+
+  <p class="bullet">• By the value labels of the split variables.
+  The value labels for the split values are used as the rootname.
+  If there is no label, the value is used instead. If a pattern is
+  used, the value labels are used in substitution in the
+  pattern.</p>
+
+  <p class="bullet">• By a sequential number. The file rootnames
+  are 0001 to the largest number needed. This option is useful if
+  the values or labels would produce awkward names. This option
+  cannot be used if a file name is specified.</p>
+
+  <p>Any characters that would be invalid in a file name on some
+  operating system are replaced by blanks. This includes ", /, \,
+  &lt;, &gt;, *, and ?.</p>
+
+  <p><span class="runinhead">Name Prefix.</span> Check this box to
+  include the text below as the start of each root name. The
+  remainder of the name will be determined by the output file names
+  setting separated by an underscore.</p>
+
+  <p class="bullet">•This option cannot be used with a pattern.</p>
+
+  <p><span class="runinhead">Display list of files written.</span>
+  Check this box to produce a listing in the Viewer of the files
+  written and the associated split variable values.</p>
+
+  <h2>Additional Features</h2>Run the command<br>
+  SPSSINC SPLIT DATASET /HELP.<br>
+  to display the entire syntax description. Using syntax, the ouput
+  can be written to the current working directory of the SPSS
+  Processor. The command SHOW DIRECTORY displays what that
+  directory is.
+
+  <p>The number of data passes required to produce the SAV files
+  depends on your IBM SPSS Statistics version. For version 17, 10
+  SAV files can be produced per pass. In later versions, 64 at a
+  time are produced.</p>
+
+  <h2>Requirements</h2>This command requires the Python
+  Programmability Plug-in, You can find the Python plug-in on the
+  IBM SPSS Statistics CD, or you can download it from the SPSS
+  Community at www.ibm.com/developerworks/spssdevcentral.
+  <hr>
+
+  <p style="font-size:80%;">© Copyright IBM Corp. 1989, 2013</p>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=utf-8">
+
+  <title>Scission du jeu de données actif en une collection de fichiers SAV en fonction d'une variable</title>
+  <style type="text/css">
+
+  <!-- 
+
+  H1 {font-weight:bold; color:#006699; font-size:125%; }
+  H2 {font-weight:bold; color:#006699; font-size:110%; }
+  TABLE {font-size:100%;}
+
+  /* paragraph tags */
+  .step {text-indent: -1.3em; margin-left:1.3em; margin-top: 0px;}
+  .menuselection {margin-left:10px}
+  .bullet {list-style-type: disc;margin-top:12px; margin-left:36px; text-indent:-1em; }
+  .codeblock {background-color: #ffffe6; display:block; margin-left:5px; padding:5px;}
+
+  /* inline tags */
+  .screen {font-weight:bold; color:#408080}                       /*** used refer to on-screen text ***/
+  .name {font-style: italic}                                                       /*** used to tag names, such as variable names, file names, and so forth ***/
+  .runinhead {font-weight: bold} 
+  .superscript {vertical-align:super; font-size:80%}
+  .subscript {vertical-align:sub; font-size:80%}
+
+
+  --> 
+  </style>
+</head>
+
+<body>
+  <h1>Création d'un ensemble de fichiers SAV en fractionnant le jeu de données actif</h1>Cette
+procédure fonctionne de manière similaire à la commande SPLIT
+FILES mais elle écrit les parties scindées dans un nouveau fichier SAV plutôt que de définir des
+groupes à traiter séparément à l'aide de procédures. Ceci se révèle particulièrement utile
+lorsqu'un bloc de transformation et/ou une syntaxe de procédure doit être appliqué séparément à
+chaque groupe. La commande d'extension SPSSINC PROCESS FILES ou la boîte de dialogue équivalente
+Utilitaires&gt;Traiter les fichiers peut être utilisée avec la sortie de cette procédure sans les
+restrictions de la méthode SPLIT FILES.
+
+  <p><span class="runinhead">Fractionner les observations par</span> Choisissez une ou plusieurs variables pour
+fractionner les données actives en un ensemble de fichiers. Les variables peuvent être de type
+chaîne ou numérique. Les valeurs numériques doivent avoir des valeurs de type entier. La boîte de
+dialogue n'affiche pas les variables avec un niveau de mesure d'échelle.</p>
+
+  <p><span class="runinhead">Emplacement de sortie</span> Les fichiers de sortie peuvent être
+écrits dans un répertoire particulier, qui sera créé le cas échéant, ou vous pouvez créer à
+l'aide de la commande un nouveau répertoire temporaire et y écrire les fichiers. Sélectionnez
+le bouton radio approprié. Si vous indiquez un répertoire, sélectionnez-le dans
+<span class=".screen">Répertoire des fichiers de sortie</span>. Ce contrôle doit être vide si vous
+choisissez d'utiliser un répertoire temporaire.</p>
+
+  <p class="bullet">• Le répertoire temporaire n'est pas supprimé à la fin du travail.</p>
+
+  <p>Vous pouvez indiquer un modèle qui utilise les valeurs ou les libellés des variables
+de scission en vue d'envoyer les fichiers de sortie vers des répertoires en fonction de valeurs ou
+de libellés de scission. Vous pouvez faire référence aux variables de scission sous l'appellation
+${variable nom} dans la spécification de répertoire. Par exemple, si vous effectuez la scission en
+fonction de la variable xvar ayant les valeurs "a" et "b", entrez<br>
+  c:/target/x${xvar}<br>
+  Les fichiers sont écrits dans le répertoire /target/xa ou /target/xb suivant les valeurs xvar.</p>
+
+  <p>Vous pouvez utiliser autant de références de variables que vous le souhaitez. Les
+répertoires seront créés selon les besoins. Ils sont créés uniquement pour les valeurs actuelles
+trouvées dans les données. Le mécanisme du modèle de masque peut également être utilisé pour
+les noms de fichier.</p>
+
+  <p class="bullet">•Les caractères interdits dans les noms de répertoire ou de fichier,
+tels que ", seront remplacés par un trait de soulignement (_).</p>
+
+  <p class="bullet">•Les résultats peuvent différer entres les systèmes de fichiers suivant que les
+noms de répertoire et de fichier sont dépendants maj/min ou non comme c'est le cas dans Windows.</p>
+
+  <p><span class="runinhead">Suppression de fichiers SAV existants à partir d'un répertoire cible</span> Si
+vous utilisez un répertoire explicitement indiqué vous pouvez supprimer tous les fichiers SAV
+existants de la cible avant la génération de nouveaux fichiers. Ceci peut réduire la dispersion et
+faciliter le traitement ultérieur de ces fichiers en tant que groupe, mais vous devez savoir
+précisément ce qui sera supprimé. A l'aide des modèles, les répertoires sont supprimés uniquement
+pour les valeurs de modèle réellement présentes dans le jeu de données.</p>
+
+  <p><span class="runinhead">Noms de fichier de sortie</span>Par défaut, les noms de fichier de
+sortie seront créés en combinant les valeurs ou les libellés de toutes les variables de scission,
+séparées par un trait de soulignement.
+  Vous pouvez remplacer cela par un nom de fichier fixe ou un modèle, tel que décrit pour les
+répertoires. Une extension .sav sera automatiquement ajoutée.</p>
+
+  <p class="bullet">•Un nom de fichier fixe doit être combiné à un modèle de répertoire, ou toutes
+les données seront écrites dans le même fichier.</p>
+
+  <p><span class="runinhead">Fichier de liste de sortie</span> Entrez une spécification de
+fichier pour créer un fichier répertoriant tous les fichiers SAV créés par la commande. Elle
+contient le chemin d'accès complet au fichier et sa valeur de scission. Ceci facilite
+l'utilisation de la sortie de cette procédure lors du traitement ultérieur de l'ensemble de
+fichiers ou pour la consignation. Le fichier est écrit avec l'encodage Unicode UTF-8.</p>
+
+  <h2>Options</h2>La sous-boîte de dialogue Options permet d'indiquer la base utilisée
+pour nommer les fichiers de sortie et si la liste des fichiers doit être affichée dans le
+visualisateur.
+
+  <p><span class="runinhead">Noms de fichier de sortie</span> Les noms de fichier peuvent être
+générés de trois manières :</p>
+
+  <p class="bullet">• En fonction des valeurs des variables de scission. Les noms de fichier
+sont au format <i>valeur1_valeur2</i>.sav, par exemple, avec deux variables. Si une valeur est une valeur système manquante le nom de racine sera <i>$Sysmis</i>. Pour
+les variables de chaîne une valeur vide génère un fichier simplement appelé <i>.sav</i>. Il s'agit
+d'un nom de fichier accepté mais sur certains systèmes d'exploitation il n'apparaît pas dans une
+liste de répertoires par défaut. Si un modèle est utilisé, les valeurs de variable sont utilisées
+en remplacement dans le modèle.</p>
+
+  <p class="bullet">• En fonction des libellés de valeur des variables de scission.
+  Les libellés de valeur pour les valeurs de scission sont utilisés comme nom de racine.
+  S'il n'y a pas de libellé, la valeur est utilisée à la place. Si un modèle est utilisé les
+libellés de valeur sont utilisés en remplacement dans ce dernier.</p>
+
+  <p class="bullet">• En fonction d'un nombre séquentiel. Les noms de racine de fichier vont de
+0001 au nombre le plus important requis. Cette option est utile si les valeurs ou les libellés
+génèrent des noms non conformes. Cette option ne peut pas être utilisée si un nom de fichier est
+indiqué.</p>
+
+  <p>Tout caractère non valide dans un nom de fichier sur un système d'exploitation est remplacé
+par un blanc. Ces caractères sont les suivantes : ", /, \, &lt;, &gt;, * et ?.</p>
+
+  <p><span class="runinhead">Préfixe de nom</span> Sélectionnez cette case à cocher pour
+que le texte ci-dessous soit inclus au début de chaque nom de racine. Le reste du nom sera
+déterminé en paramétrant des noms de fichier de sortie séparés par un trait de soulignement.</p>
+
+  <p class="bullet">• Cette option ne peut pas être utilisée avec un modèle.</p>
+
+  <p><span class="runinhead">Afficher la liste des fichiers écrits</span>
+  Sélectionnez cette case à cocher pour générer dans le visualiseur une liste des fichiers écrits
+avec les valeurs de variable de scission associées.</p>
+
+  <h2>Fonctions supplémentaires</h2>Exécutez la commande<br>
+  SPSSINC SPLIT DATASET /HELP<br>
+  pour afficher la description intégrale de la syntaxe. A l'aide de la syntaxe, la sortie peut être
+écrite dans le répertoire de travail actif du processeur SPSS. La commande SHOW DIRECTORY
+permet de voir à quoi correspond ce répertoire.
+
+  <p>Le nombre de passages de données requis pour générer les fichiers SAV dépend de votre
+version d'IBM SPSS Statistics. Pour la version 17, 10 fichiers SAV peuvent être générés par
+passe. Dans les dernières versions 64 fichiers sont générés à la fois.</p>
+
+  <h2>Conditions requises</h2>Cette commande requiert le plug-in de programmabilité Python fourni
+sur le CD-ROM IBM SPSS Statistics ou téléchargeable à partir de la communauté SPSS à
+l'adresse www.ibm.com/developerworks/spssdevcentral.
+  <hr>
+
+  <p style="font-size:80%;">© Copyright IBM Corp. 1989, 2013</p>
+</body>
+</html>

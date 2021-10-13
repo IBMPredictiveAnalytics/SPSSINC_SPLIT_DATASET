@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=utf-8">
+
+  <title>Dividir o Conjunto de Dados Ativo em uma Coleção de Arquivos SAV Baseado em uma Variável</title>
+  <style type="text/css">
+
+  <!-- 
+
+  H1 {font-weight:bold; color:#006699; font-size:125%; }
+  H2 {font-weight:bold; color:#006699; font-size:110%; }
+  TABLE {font-size:100%;}
+
+  /* paragraph tags */
+  .step {text-indent: -1.3em; margin-left:1.3em; margin-top: 0px;}
+  .menuselection {margin-left:10px}
+  .bullet {list-style-type: disc;margin-top:12px; margin-left:36px; text-indent:-1em; }
+  .codeblock {background-color: #ffffe6; display:block; margin-left:5px; padding:5px;}
+
+  /* inline tags */
+  .screen {font-weight:bold; color:#408080}                       /*** used refer to on-screen text ***/
+  .name {font-style: italic}                                                       /*** used to tag names, such as variable names, file names, and so forth ***/
+  .runinhead {font-weight: bold} 
+  .superscript {vertical-align:super; font-size:80%}
+  .subscript {vertical-align:sub; font-size:80%}
+
+
+  --> 
+  </style>
+</head>
+
+<body>
+  <h1>Criar um Conjunto de Arquivos SAV Dividindo o Conjunto de Dados Ativo</h1>Este procedimento funciona de forma semelhante ao comando SPLIT FILES, mas ele grava as divisões em novos arquivos SAV em vez de definir grupos a serem processados separadamente por procedimentos. Isso é especialmente útil quando um bloco de transformação e/ou sintaxe de procedimento precisa ser aplicada separadamente para cada grupo. O   comando de extensão SPSSINC PROCESS FILES ou a caixa de diálogo equivalente   Utilitários&gt;Arquivos de Processo podem ser usados com a saída   deste procedimento sem as restrições do método   SPLIT FILES.
+
+  <p><span class="runinhead">Dividir Casos Por.</span> Escolha uma ou mais variáveis para utilizar para dividir os dados ativos em um conjunto de arquivos. As variáveis podem ser de sequência de caracteres ou numéricas. Variáveis numéricas devem ter valores de número inteiro. O diálogo não exibe variáveis com um nível de medição de escala.</p>
+
+  <p><span class="runinhead">Localização de Saída.</span> Os arquivos de saída pode ser gravados em um diretório especificado, que será criado se necessário, ou você o comando pode criar um novo diretório temporário e gravar os arquivos lá. Marque o botão de opções apropriado. Se estiver especificando um diretório, selecione-o em   <span class=".screen">Diretório do Arquivo de Saída</span>. Esse controle deve estar vazio se você optar por utilizar um diretório temporário.</p>
+
+  <p class="bullet">• O diretório temporário não é removido no final da tarefa.</p>
+
+  <p>Você pode especificar um padrão que utiliza os valores ou rótulos das variáveis de divisão para rotear os arquivos de saída para os diretórios baseado nos valores ou rótulos de divisão. Para consultar as   variáveis de divisão, consulte-as como ${variable name} na   especificação de diretório. Por exemplo, se estiver dividindo pela variável xvar que possui valores "a" e "b", escreva<br>
+  c:/target/x${xvar}<br>
+  isso gravará arquivos em /target/xa ou /target/xb de acordo com   os valores de xvar.</p>
+
+  <p>Você pode utilizar quantas referências de variável quanto for necessário. Os diretórios   serão criados conforme necessário. Eles são criados apenas para os valores reais localizados nos dados. O mecanismo de modelo padrão também pode ser utilizado para nomes de arquivo.</p>
+
+  <p class="bullet">•Os caracteres que são ilegais no diretório ou nomes de arquivo, como ", serão substituído por um sublinhado (_).</p>
+
+  <p class="bullet">•Resultados podem diferir entre sistemas de arquivo em que nomes de diretórios e de arquivos fazem distinção entre maiúsculas e minúsculas e aqueles, como Windows, que não fazem.</p>
+
+  <p><span class="runinhead">Excluir arquivos sav existentes dos diretórios de destino.</span> Se estiver usando um diretório especificado explicitamente, você pode remover todos os arquivos SAV existentes da resposta antes da geração de novos arquivos. Isso pode reduzir a confusão e facilitar o processamento desses arquivos como um grupo mais tarde, mas certifique-se de entender o que será excluído. Com padrões, diretórios são apenas limpos para valores padrão realmente ocorrendo no conjunto de dados.</p>
+
+  <p><span class="runinhead">Nomes de Arquivo de Saída.</span>Por padrão,   os nomes de arquivo de saída serão construídos combinando os valores ou rótulos de   todas as variáveis de divisão separados por sublinhado.
+  Você pode substituir isso por um nome de arquivo fixo ou um padrão, conforme descrito para diretórios. Uma extensão .sav será automaticamente incluída.</p>
+
+  <p class="bullet">•Um nome de arquivo fixo deve ser combinado com um diretório padrão, ou todos os dados serão gravados no mesmo arquivo.</p>
+
+  <p><span class="runinhead">Arquivo de Listagem de Saída.</span> Insira uma especificação de arquivo para criar um arquivo que lista todos os arquivos SAV criados pelo comando. Ele contém o caminho completo para o arquivo e o valor de divisão para esse arquivo. Isso facilita o uso da saída deste procedimento em processamentos subsequentes do conjunto de arquivos ou para a criação de log. O arquivo é gravado na codificação Unicode utf-8.</p>
+
+  <h2>Opções</h2>Utilize o subdialog Opções para especificar a base para a nomenclatura dos arquivos de saída e se deve ser exibida a lista de arquivos no Visualizador
+
+  <p><span class="runinhead">Nomes de Arquivo de Saída.</span> Nomes de arquivo podem ser gerado de três maneiras:</p>
+
+  <p class="bullet">• Pelos valores das variáveis de divisão. Os   nomes de arquivo têm a forma <i>value1_value2</i>.sav, por exemplo,   com duas variáveis. Se um valor for omisso do sistema, o nome raiz  será <i>$Sysmis</i>. Para variáveis de sequência, um valor em branco   produz um arquivo denominado apenas <i>.sav</i>. Este é um nome de arquivo legal, mas, em alguns sistemas operacionais, ele não aparecerá em uma listagem de diretório por padrão. Se um padrão for utilizado, os valores da variável são utilizados em substituição no padrão.</p>
+
+  <p class="bullet">• Pelos rótulos de valor das variáveis de divisão.
+  Os rótulos de valor para os valores de divisão são utilizados como o nome raiz.
+  Se não houver nenhum rótulo, o valor é utilizado no lugar. Se um padrão for utilizado, os rótulos de valor são utilizados em substituição no padrão.</p>
+
+  <p class="bullet">• Por um número sequencial. Os nomes raiz do arquivo são 0001 até o maior número necessário. Essa opção é útil se os valores ou rótulos produziriam nomes estranhos. Essa opção não pode ser usada se um nome de arquivo for especificado.</p>
+
+  <p>Qualquer caractere que seria inválido em um nome de arquivo em algum sistema operacional é substituído por espaços em branco. Isso inclui ", /, \,   &lt;, &gt;, * e ?.</p>
+
+  <p><span class="runinhead">Prefixo de Nome.</span> Marque esta caixa para incluir o texto abaixo como o início de cada nome raiz. O restante do nome será determinado pela configuração dos nomes do arquivo de saída separados por um sublinhado.</p>
+
+  <p class="bullet">•This opção não pode ser usada com um padrão.</p>
+
+  <p><span class="runinhead">Lista de exibição de arquivos gravados.</span>
+  Marque esta caixa para produzir uma listagem no Visualizador do arquivos gravados e dos valores de variável de divisão associados.</p>
+
+  <h2>Recursos adicionais</h2>Execute o comando<br>
+  SPSSINC SPLIT DATASET /HELP.<br>
+  para exibir a descrição toda da sintaxe. Usando sintaxe, a saída pode ser gravada no diretório ativo atual do SPSS Processor. O comando SHOW DIRECTORY exibe qual é esse diretório.
+
+  <p>O número de passagens de dados necessárias para produzir os arquivos SAV depende de sua versão do IBM SPSS Statistics. Para a versão 17, 10 arquivos SAV podem ser produzidos por passagem. Em versões mais recentes, 64 são produzidos por vez.</p>
+
+  <h2>Requisitos</h2>Este comando requer o   Python Programmability Plug-in. O Plug-in do Python pode ser localizado no   CD do IBM SPSS Statistics, ou você pode fazer download dele no SPSS   Community em (www.ibm.com/developerworks/spssdevcentral).
+  <hr>
+
+  <p style="font-size:80%;">© Copyright IBM Corp. 1989, 2013</p>
+</body>
+</html>

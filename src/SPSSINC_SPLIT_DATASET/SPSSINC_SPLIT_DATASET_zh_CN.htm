@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=utf-8">
+
+  <title>根据变量，将活动数据集拆分为一组 SAV 文件</title>
+  <style type="text/css">
+
+  <!-- 
+
+  H1 {font-weight:bold; color:#006699; font-size:125%; }
+  H2 {font-weight:bold; color:#006699; font-size:110%; }
+  TABLE {font-size:100%;}
+
+  /* paragraph tags */
+  .step {text-indent: -1.3em; margin-left:1.3em; margin-top: 0px;}
+  .menuselection {margin-left:10px}
+  .bullet {list-style-type: disc;margin-top:12px; margin-left:36px; text-indent:-1em; }
+  .codeblock {background-color: #ffffe6; display:block; margin-left:5px; padding:5px;}
+
+  /* inline tags */
+  .screen {font-weight:bold; color:#408080}                       /*** used refer to on-screen text ***/
+  .name {font-style: italic}                                                       /*** used to tag names, such as variable names, file names, and so forth ***/
+  .runinhead {font-weight: bold} 
+  .superscript {vertical-align:super; font-size:80%}
+  .subscript {vertical-align:sub; font-size:80%}
+
+
+  --> 
+  </style>
+</head>
+
+<body>
+  <h1>通过拆分活动数据集创建一组 SAV 文件</h1>此过程的工作方式类似于
+SPLIT FILES 命令，但是将拆分写入新的 SAV
+文件，而不是定义要由各个过程单独处理的组。如果需要将转换块和/或过程语法块单独应用于每个组，那么上述工作方式将尤为有用。扩展命令 SPSSINC PROCESS FILES 或等效的“实用程序”&gt;“处理文件”对话框
+可以与此过程的输出配合使用，而不会受到 SPLIT FILES 方法的限制。
+
+  <p><span class="runinhead">按以下变量拆分个案</span>。请选择一个或多个要用于将活动数据拆分为一组文件的变量。这些变量可以是字符串或数字。数字变量必须具有整数值。此对话框不显示具有标度测量级别的变量。</p>
+
+  <p><span class="runinhead">输出位置</span>。可以将输出文件写入指定的目录（此目录将根据需要进行创建），也可以让命令创建新的临时目录并将文件写入其中。请选中相应的单选按钮。如果您是指定目录，请在<span class=".screen">输出文件目录</span>中将其选中。如果您选择使用临时目录，那么必须保留该控件为空。</p>
+
+  <p class="bullet">• 作业结束时不会除去该临时目录。</p>
+
+  <p>您可以指定一种使用了拆分变量值或拆分变量标签的模式，以便根据拆分变量的值或标签将输出文件传递到不同的目录。要引用拆分变量，请在目录指定项中以 ${variable name}
+格式进行引用。例如，如果按具有值“a”和“b”的变量 xvar 进行拆分，并写入
+<br>c:/target/x${xvar}<br>，那么将根据 xvar 的值将文件写入 /target/xa 或 /target/xb。</p>
+
+  <p>可以使用任意数目的变量引用。系统将根据需要创建目录。将仅针对数据中找到的实际值创建目录。模式模板机制也可以用于文件名。</p>
+
+  <p class="bullet">• 目录名或文件名中的非法字符（例如 "）将替换为下划线 (_)。</p>
+
+  <p class="bullet">• 在目录名和文件名区分大小写的文件系统与那些名称不区分大小写的文件系统（例如 Windows）之间，结果可能有所不同。</p>
+
+  <p><span class="runinhead">删除目标目录中的现有 SAV 文件</span>。如果使用以显式方式指定的目录，那么可以先从目标中除去所有的现有 SAV 文件，然后再生成新文件。这可以减少杂乱，并且便于稍后成组地处理这些文件，但您必须确保自己了解所要删除的内容。使用模式时，将仅根据数据集中实际存在的模式值清空目录。</p>
+
+  <p><span class="runinhead">输出文件名</span>。缺省情况下，构建输出文件名的方法是，将所有拆分变量的值或标签合并，并以下划线分隔。您可以改为使用固定的文件名，或者改为使用模式（例如针对目录描述的模式）。系统将自动添加 .sav 扩展名。</p>
+
+  <p class="bullet">• 固定文件名应该与目录模式结合使用，否则所有数据将写入同一个文件。</p>
+
+  <p><span class="runinhead">输出列表文件</span>。请输入文件指定项以创建一个文件，该文件将列出此命令创建的所有 SAV 文件。此文件包含各个 SAV 文件的完整路径以及相应的拆分值。这便于在文件集的后续处理中使用此过程的输出或者进行日志记录。此文件以 Unicode UTF-8 编码格式编写。</p>
+
+  <h2>选项</h2>使用“选项”子对话框可以指定输出文件的命名基准，并指定是否在查看器中显示文件列表。
+<p><span class="runinhead">输出文件名</span>。可以通过下列三种方式生成文件名：</p>
+
+  <p class="bullet">• 按拆分变量的值。例如，含有两个变量的文件名的格式为
+<i>value1_value2</i>.sav。如果其中一个值是系统缺失值，那么根名称将为
+<i>$Sysmis</i>。对于字符串变量，空值将生成名称仅为 <i>.sav</i>
+的文件。这是合法的文件名，但在某些操作系统上，缺省情况下不会将此名称显示在目录列表中。如果使用了模式，那么在该模式中，将使用变量值进行替代。</p>
+
+  <p class="bullet">• 按拆分变量的值标签。将拆分值的值标签用作根名称。如果不存在任何标签，那么将改为使用值。如果使用了模式，那么在该模式中，将使用值标签进行替代。</p>
+
+  <p class="bullet">• 按序号。文件根名称是从 0001 到所需的最大编号。当值或标签会生成怪异名称时，此选项将十分有用。如果指定了文件名，那么无法使用此选项。</p>
+
+  <p>所有在某些操作系统上的文件名中无效的字符都将替换为空格。这些无效字符包括 "、/、\、&lt;、&gt;、* 和 ?。</p>
+
+  <p><span class="runinhead">名称前缀</span>。如果选中此框，那么将包括下方的文本作为每个根名称的开头。名称的其余部分由输出文件名设置确定，并以下划线分隔。</p>
+
+  <p class="bullet">• 此选项不能与模式配合使用。</p>
+
+  <p><span class="runinhead">显示写入的文件的列表</span>。选中此框将在查看器中生成一个列表，其中包含写入的文件以及相关联的拆分变量值。</p>
+
+  <h2>其他功能部件</h2>运行命令<br>
+  SPSSINC SPLIT DATASET /HELP。<br>
+  可以显示整个语法描述。通过使用语法，可以将输出写入 SPSS
+处理器的当前工作目录。SHOW DIRECTORY 命令可以显示该目录。
+<p>生成 SAV 文件所需的数据遍历次数取决于 IBM SPSS Statistics 版本。对于
+V17，每次遍历可以生成 10 个 SAV 文件。在更高版本中，每次遍历可以生成 64 个 SAV 文件。</p>
+
+  <h2>要求</h2>此命令需要 Python Programmability 插件。您可以在
+IBM SPSS Statistics CD 上找到 Python 插件，也可以从
+SPSS Community (www.ibm.com/developerworks/spssdevcentral) 下载此插件。<hr>
+
+  <p style="font-size:80%;">© Copyright IBM Corp. 1989, 2013</p>
+</body>
+</html>
