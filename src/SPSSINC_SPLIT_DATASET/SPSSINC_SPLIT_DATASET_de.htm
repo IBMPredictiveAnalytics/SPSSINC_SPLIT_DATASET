@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=utf-8">
+
+  <title>Aktives Dataset basierend auf einer Variablen in eine Sammlung von SAV-Dateien aufteilen</title>
+  <style type="text/css">
+
+  <!-- 
+
+  H1 {font-weight:bold; color:#006699; font-size:125%; }
+  H2 {font-weight:bold; color:#006699; font-size:110%; }
+  TABLE {font-size:100%;}
+
+  /* paragraph tags */
+  .step {text-indent: -1.3em; margin-left:1.3em; margin-top: 0px;}
+  .menuselection {margin-left:10px}
+  .bullet {list-style-type: disc;margin-top:12px; margin-left:36px; text-indent:-1em; }
+  .codeblock {background-color: #ffffe6; display:block; margin-left:5px; padding:5px;}
+
+  /* inline tags */
+  .screen {font-weight:bold; color:#408080}                       /*** used refer to on-screen text ***/
+  .name {font-style: italic}                                                       /*** used to tag names, such as variable names, file names, and so forth ***/
+  .runinhead {font-weight: bold} 
+  .superscript {vertical-align:super; font-size:80%}
+  .subscript {vertical-align:sub; font-size:80%}
+
+
+  --> 
+  </style>
+</head>
+
+<body>
+  <h1>Gruppe von SAV-Dateien durch Aufteilen des aktiven Datasets erstellen</h1>Diese Prozedur funktioniert ähnlich wie der Befehl SPLIT FILES; sie schreibt jedoch die Aufteilungen in neue SAV-Dateien, statt Gruppen zu definieren, die von Prozeduren getrennt zu verarbeiten sind. Dies ist besonders nützlich, wenn ein Block von Transformations- und/oder Prozedursyntax auf jede Gruppe getrennt angewendet werden muss. Der Erweiterungsbefehl SPSSINC PROCESS FILES oder das entsprechende Dialogfeld <b>Extras&gt;Dateien verarbeiten</b> kann mit der Ausgabe aus dieser Prozedur ohne die Einschränkungen der Methode SPLIT FILES verwendet werden.
+
+  <p><span class="runinhead">Fälle aufteilen nach.</span> Wählen Sie mindestens eine Variable aus, nach der die aktiven Daten in eine Gruppe von Dateien aufgeteilt werden sollen. Die Variablen können Zeichenfolge- oder numerische Variablen sein. Numerische Variablen müssen ganzzahlige Werte haben. Das Dialogfeld zeigt keine Variablen mit einem metrischen Messniveau an</p>
+
+  <p><span class="runinhead">Ausgabeposition.</span> Die Ausgabedateien können in ein angegebenes Verzeichnis geschrieben werden, dass gegebenenfalls erstellt wird, oder Sie können mit dem Befehl ein neues temporäres Verzeichnis erstellen lassen und die Dateien dorthin schreiben. Wählen Sie das entsprechende Optionsfeld aus. Wenn Sie ein Verzeichnis angeben, wählen Sie es in <span class=".screen">Ausgabedateiverzeichnis</span> aus. Dieses Steuerelement muss leer sein, wenn Sie ein temporäres Verzeichnis verwenden wollen.</p>
+
+  <p class="bullet">•&nbsp;Das temporäre Verzeichnis wird am Ende des Jobs nicht entfernt.</p>
+
+  <p>Sie können ein Muster angeben, das die Werte oder Beschriftungen der Teilungsvariablen zum Weiterleiten der Ausgabedateien an Verzeichnisse basierend auf den Teilungswerten oder -Beschriftungen verwendet. Verweisen Sie in der Verzeichnisspezifikation mit ${variable name} auf die Teilungsvariablen. Wenn Sie z.&nbsp;B. eine Aufteilung nach der Variable xvar mit den Werten "a" und "b" vornehmen wollen, schreiben Sie Folgendes:<br>
+  c:/target/x${xvar}<br>
+  Dadurch werden Dateien entsprechend ihrer xvar-Werte in <b>/target/xa</b> oder <b>/target/xb</b> geschrieben.</p>
+
+  <p>Sie können beliebig viele Variablenreferenzen verwenden. Verzeichnisse werden nach Bedarf erstellt. Sie werden nur für die in den Daten tatsächlich gefundenen Werte erstellt. Für Dateinamen kann auch die Methode mit Mustervorlagen verwendet werden.</p>
+
+  <p class="bullet">•&nbsp;Zeichen, die in Verzeichnis- oder Dateinamen unzulässig sind, wie z.&nbsp;B. ", werden durch einen Unterstrich (_) ersetzt.</p>
+
+  <p class="bullet">•&nbsp;Die Ergebnisse unterscheiden sich zwischen Dateisystemen, bei denen die Groß-/Kleinschreibung bei Verzeichnis- und Dateinamen beachtet werden muss, und solchen, wie z.&nbsp;B. Windows, bei denen dies nicht der Fall ist.</p>
+
+  <p><span class="runinhead">Vorhandene SAV-Dateien aus Zielverzeichnissen löschen.</span> Wenn Sie ein explizit angegebenes Verzeichnis verwenden, können Sie alle vorhandenen SAV-Dateien aus dem Zielverzeichnis löschen, bevor neue Dateien generiert werden. Dies sorgt für mehr Übersichtlichkeit und macht es einfacher, diese Dateien später als Gruppe zu verarbeiten. Sie müssen jedoch sicher sein, dass Sie wissen, was gelöscht wird. Mit Mustern werden Verzeichnisse nur von Musterwerten gereinigt, die tatsächlich im Dataset auftreten.</p>
+
+  <p><span class="runinhead">Ausgabedateinamen.</span> Standardmäßig werden Ausgabedateinamen durch eine Kombination der Werte und Beschriftungen aller Teilungsvariablen getrennt durch einen Unterstrich erzeugt.
+  Sie können dies durch einen festen Dateinamen oder durch ein Muster wie für Verzeichnisse überschreiben. Die Erweiterung '.sav' wird automatisch hinzugefügt.</p>
+
+  <p class="bullet">•&nbsp;Ein fester Dateiname sollte mit einem Verzeichnismuster kombiniert werden, da sonst alle Daten in dieselbe Datei geschrieben werden.</p>
+
+  <p><span class="runinhead">Listendatei ausgeben.</span> Geben Sie eine Dateispezifikation ein, um eine Datei zu erstellen, die alle vom Befehl erstellten SAV-Dateien auflistet. Sie enthält den vollständigen Pfad zur Datei und den Teilungswert für diese Datei. Dies erleichtert die Verwendung der Ausgabe dieser Prozedur bei nachfolgender Verarbeitung der Dateiengruppe oder bei der Protokollierung. Die Datei wird in Unicode UTF-8-Codierung geschrieben.</p>
+
+  <h2>Optionen</h2>Verwenden Sie den Unterdialog <b>Optionen</b>, um die Basis für die Benennung der Ausgabedateien anzugeben sowie um festzulegen, ob die Liste der Dateien im Viewer angezeigt werden soll.
+
+  <p><span class="runinhead">Ausgabedateinamen.</span> Dateinamen können auf drei Arten generiert werden:</p>
+
+  <p class="bullet">•&nbsp;Mittels der Werte der Teilungsvariablen. Die Dateinamen haben z.&nbsp;B. die Form '<i>wert1_wert2</i>.sav', wenn zwei Variablen verwendet werden. Bei einem systemdefiniert fehlenden Wert lautet der Stammname <i>$Sysmis</i>. Bei Zeichenfolgevariablen erzeugt ein Leerwert eine Datei, die nur mit <i>.sav</i> benannt ist. Dies ist ein zulässiger Dateiname, der allerdings bei einigen Betriebssystemen nicht standardmäßig in einer Verzeichnisliste erscheint. Wenn ein Muster verwendet wird, werden bei der Ersetzung im Muster die Variablenwerte verwendet.</p>
+
+  <p class="bullet">•&nbsp;Mittels der Wertbeschriftungen der Teilungsvariablen.
+  Die Wertbeschriftungen für die Teilungswerte werden als Stammname verwendet.
+  Wenn es keine Beschriftung gibt, wird stattdessen der Wert verwendet. Wenn ein Muster verwendet wird, werden bei der Ersetzung im Muster die Wertbeschriftungen verwendet.</p>
+
+  <p class="bullet">•&nbsp;Mittels einer fortlaufenden Zahl. Die Dateistammnamen lauten 0001 bis zur größten erforderlichen Nummer. Diese Option ist nützlich, wenn die Werte oder Beschriftungen zu sperrigen Namen führen würden. Diese Option kann nicht verwendet werden, wenn ein Dateiname angegeben ist.</p>
+
+  <p>Zeichen, die in einem Dateiname auf einem Betriebssystem ungültig wären, werden durch Leerzeichen ersetzt. Dazu gehören ", /, \, &lt;, &gt;, * und ?.</p>
+
+  <p><span class="runinhead">Namenspräfix.</span> Wählen Sie dieses Feld aus, um den darunter festgelegten Text als Anfang jedes Stammnamens einzuschließen. Der restliche Name wird durch die Einstellung für die Ausgabedateinamen, getrennt durch einen Unterstrich, bestimmt.</p>
+
+  <p class="bullet">•&nbsp;Diese Option kann nicht in Verbindung mit einem Muster verwendet werden.</p>
+
+  <p><span class="runinhead">Liste geschriebener Dateien anzeigen.</span>
+  Wählen Sie dieses Feld aus, um eine Liste der geschriebenen Dateien und der zugehörigen Teilungsvariablenwerte im Viewer anzuzeigen.</p>
+
+  <h2>Weitere Funktionen</h2>Führen Sie den folgenden Befehl aus:<br>
+  SPSSINC SPLIT DATASET /HELP.<br>
+  Sie zeigen damit die vollständige Syntaxbeschreibung an. Mithilfe der entsprechenden Syntax kann die Ausgabe in das aktuelle Arbeitsverzeichnis des SPSS-Prozessors geschrieben werden. Der Befehl SHOW DIRECTORY zeigt dieses Verzeichnis an.
+
+  <p>Wie viele Datendurchläufe zum Erstellen der SAV-Dateien erforderlich sind, hängt von Ihrer Version von IBM SPSS Statistics ab. Bei Version 17 können 10 SAV-Dateien pro Durchlauf erstellt werden. In neueren Versionen werden 64 Dateien in einem Durchlauf erzeugt.</p>
+
+  <h2>Anforderungen</h2>Dieser Befehl erfordert das Python-Programmierungs-Plug-in. Sie finden das Python-Plug-in auf der IBM SPSS Statistics-CD oder Sie können es über SPSS Community (www.ibm.com/developerworks/spssdevcentral) herunterladen.
+  <hr>
+
+  <p style="font-size:80%;">© Copyright IBM Corp. 1989, 2013</p>
+</body>
+</html>

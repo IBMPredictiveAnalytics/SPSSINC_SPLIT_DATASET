@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=utf-8">
+
+  <title>基於變數將作用中資料集分割為 SAV 檔案集合</title>
+  <style type="text/css">
+
+  <!-- 
+
+  H1 {font-weight:bold; color:#006699; font-size:125%; }
+  H2 {font-weight:bold; color:#006699; font-size:110%; }
+  TABLE {font-size:100%;}
+
+  /* paragraph tags */
+  .step {text-indent: -1.3em; margin-left:1.3em; margin-top: 0px;}
+  .menuselection {margin-left:10px}
+  .bullet {list-style-type: disc;margin-top:12px; margin-left:36px; text-indent:-1em; }
+  .codeblock {background-color: #ffffe6; display:block; margin-left:5px; padding:5px;}
+
+  /* inline tags */
+  .screen {font-weight:bold; color:#408080}                       /*** used refer to on-screen text ***/
+  .name {font-style: italic}                                                       /*** used to tag names, such as variable names, file names, and so forth ***/
+  .runinhead {font-weight: bold} 
+  .superscript {vertical-align:super; font-size:80%}
+  .subscript {vertical-align:sub; font-size:80%}
+
+
+  --> 
+  </style>
+</head>
+
+<body>
+  <h1>透過分割作用中資料集建立一組 SAV 檔案</h1>此程序的功能類似於 SPLIT FILES 指令，但會將分割寫入新的 SAV 檔案，而不是定義由程序單獨處理的群組。需要將轉換及/或程序語法區塊分別套用至每個群組時，此程序特別有用。延伸指令 SPSSINC PROCESS FILES 或等效的「公用程式&gt;程序檔」對話框可以與此程序的輸出搭配使用，不受 SPLIT FILES 方法的限制。
+  <p><span class="runinhead">分割觀察值方式。</span> 選擇一或多個用於將作用中資料分割為一組檔案的變數。變數可以是字串或數值。數值變數必須具有整數值。對話框不顯示具有比例測量層次的變數。</p>
+
+  <p><span class="runinhead">輸出位置。</span> 輸出檔可以寫入指定的目錄（必要的話，將會建立），您也可以使用指令建立新的暫存目錄並在其中寫入檔案。請勾選適當的圓鈕。如果指定目錄，請在<span class=".screen">輸出檔目錄</span>中選取它。如果選擇使用暫存目錄，該控制項必須為空白。</p>
+
+  <p class="bullet">• 在工作結束時不會移除暫存目錄。</p>
+
+  <p>您可以指定使用分割變數的值或標籤的型樣，以便基於分割的值或標籤將輸出檔遞送至目錄。若要參照分割變數，請將其參照為目錄規格中的 ${variable name}。例如，如果依值為 "a" 和 "b" 的變數 xvar 進行分割，請寫入<br>
+  c:/target/x${xvar}<br>
+  這會根據 xvar 值將檔案寫入 /target/xa 或 /target/xb。</p>
+
+  <p>您可以根據需要使用多個變數參照。將根據需要建立目錄。建立這些目錄只是為了存放資料中找到的實際值。型樣範本機制還可以用於檔名。</p>
+
+  <p class="bullet">•目錄或檔名中無效的字元（例如 " ）將被底線 (_) 取代。</p>
+
+  <p class="bullet">•目錄和檔名區分大小寫的檔案系統與不區分大小寫的檔案系統（例如 Windows）之間的結果可能不同。</p>
+
+  <p><span class="runinhead">從目標目錄中刪除現有的 SAV 檔案。</span> 如果使用明確指定的目錄，您可以在產生新檔案之前，從目標中移除所有現有的 SAV 檔案。這可以減少雜亂，稍後也更容易將這些檔案作為群組進行處理，但您一定要瞭解將刪除哪些檔案。使用型樣的話，只會清除用來存放資料集中實際出現的型樣值的目錄。</p>
+
+  <p><span class="runinhead">輸出檔名稱。</span>依預設，將透過結合所有分割變數的值或標籤來建構輸出檔名稱（以底線區隔）。您可以將該名稱置換為固定檔名或型樣，例如針對目錄進行的說明。將自動新增 .sav 副檔名。</p>
+
+  <p class="bullet">•固定檔名應與目錄型樣結合，否則所有資料將寫入相同的檔案。</p>
+
+  <p><span class="runinhead">輸出清單檔案。</span> 輸入檔案規格可建立檔案，該檔案中會列出透過指令建立的所有 SAV 檔案。它包含檔案的完整路徑和該檔案的分割值。這便於在後續處理檔案集時使用此程序的輸出，或將輸出用於記載。檔案以 Unicode utf-8 編碼撰寫。</p>
+
+  <h2>選項</h2>使用「選項」子對話框可指定輸出檔命名基準，以及是否在檢視器中顯示檔案清單
+  <p><span class="runinhead">輸出檔名稱。</span> 可透過三種方式產生檔名：</p>
+
+  <p class="bullet">• 透過分割變數的值。例如，對於兩個變數的情況，檔名的格式為 <i>value1_value2</i>.sav。如果值為系統遺漏，則根名稱為 <i>$Sysmis</i>。對於字串變數，空白值會產生名為 <i>.sav</i> 的檔案。這是合法的檔名，但在部分作業系統上，依預設，它不會出現在目錄清單中。如果使用了型樣，在型樣中會使用變數值來替代。</p>
+
+  <p class="bullet">• 透過分割變數的值標籤。分割值的值標籤會用作根名稱。如果沒有標籤，則會改用值。如果使用型樣，會在型樣中使用值標籤來替代。</p>
+
+  <p class="bullet">• 透過序號。檔案根名稱為 0001 至需要的最大數字。如果值或標籤會產生不協調的名稱，此選項將十分有用。如果已指定檔名，則無法使用此選項。</p>
+
+  <p>如有任何字元在部分作業系統的檔名中無效，將以空白來取代。這包括 "、/、\、&lt;、&gt;、* 和 ?。</p>
+
+  <p><span class="runinhead">名稱字首。</span> 勾選此方框可包含下面的文字，作為每個根名稱的開頭。名稱的其餘部分將由以底線區隔的輸出檔名稱設定決定。</p>
+
+  <p class="bullet">•此選項無法與型樣搭配使用。</p>
+
+  <p><span class="runinhead">顯示寫入檔案的清單。</span>
+  勾選此方框可在檢視器中產生寫入的檔案和關聯的分割變數值的清單。</p>
+
+  <h2>其他特性</h2>執行指令<br>
+  SPSSINC SPLIT DATASET /HELP.<br>
+  以顯示整個語法說明。使用語法，可將輸出寫入到 SPSS Processor 的現行工作目錄。SHOW DIRECTORY 指令顯示該目錄是什麼。
+  <p>產生 SAV 檔案所需的資料傳遞次數視  IBM SPSS Statistics 版本而定。若為第 17 版，每次傳遞可產生 10 個 SAV 檔案。在更新的版本中，每次可產生 64 個檔案。</p>
+
+  <h2>需求</h2>此指令需要 Python Programmability Plug-in，您可以在 IBM SPSS Statistics CD 上找到 Python 外掛程式，也可以從 SPSS 社群 (www.ibm.com/developerworks/spssdevcentral) 下載。
+  <hr>
+
+  <p style="font-size:80%;">© Copyright IBM Corp. 1989, 2013</p>
+</body>
+</html>

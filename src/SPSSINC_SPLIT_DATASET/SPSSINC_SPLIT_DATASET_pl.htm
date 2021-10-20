@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=utf-8">
+
+  <title>Podział aktywnego zbioru danych na kolekcję plików SAV na
+  podstawie zmiennej</title>
+  <style type="text/css">
+
+  <!-- 
+
+  H1 {font-weight:bold; color:#006699; font-size:125%; }
+  H2 {font-weight:bold; color:#006699; font-size:110%; }
+  TABLE {font-size:100%;}
+
+  /* paragraph tags */
+  .step {text-indent: -1.3em; margin-left:1.3em; margin-top: 0px;}
+  .menuselection {margin-left:10px}
+  .bullet {list-style-type: disc;margin-top:12px; margin-left:36px; text-indent:-1em; }
+  .codeblock {background-color: #ffffe6; display:block; margin-left:5px; padding:5px;}
+
+  /* inline tags */
+  .screen {font-weight:bold; color:#408080}                       /*** used refer to on-screen text ***/
+  .name {font-style: italic}                                                       /*** used to tag names, such as variable names, file names, and so forth ***/
+  .runinhead {font-weight: bold} 
+  .superscript {vertical-align:super; font-size:80%}
+  .subscript {vertical-align:sub; font-size:80%}
+
+
+  --> 
+  </style>
+</head>
+
+<body>
+  <h1>Tworzenie zbioru plików SAV poprzez podział aktywnego zbioru
+  danych</h1>Działanie tej procedury przypomina działanie komendy
+  SPLIT FILES, ale procedura zapisuje podziały do nowych plików SAV i
+  nie definiuje grup do przetwarzania osobno przy użyciu procedur. Jest to szczególnie użyteczne, gdy wymagane jest zastosowanie bloku
+  komend przekształcenia i/lub procedury osobno względem każdej
+  grupy. Komendę rozszerzającą SPSSINC PROCESS FILES lub równoważne
+  jej okno dialogowe Narzędzia&gt;Przetwarzaj pliki można użyć z
+  wynikami tej procedury bez ograniczeń, jakie występują w przypadku
+  metody SPLIT FILES.
+
+  <p><span class="runinhead">Rozdziel obserwacje według.</span> Należy
+  wybrać jedną lub większą liczbę zmiennych, które zostaną
+  wykorzystane w celu podziału aktywnych danych na zestaw plików. Zmienne mogą być łańcuchowe lub numeryczne. Zmienne numeryczne muszą
+  mieć wartości całkowite. W oknie dialogowym nie są wyświetlane zmienne
+  z ilościowym poziomem pomiaru.</p>
+
+  <p><span class="runinhead">Lokalizacja wyjściowa.</span> Pliki
+  wyjściowe można zapisać w określonym katalogu, który zostanie
+  utworzony w razie potrzeby, lub komenda może utworzyć nowy katalog
+  tymczasowy i zapisać w nim pliki. Zaznacz odpowiednią opcję. Jeśli zamierzasz określić katalog, wskaż go w obszarze
+  <span class=".screen">Katalog pliku wynikowego</span>. Jeśli
+  używany będzie katalog tymczasowy, wówczas ten element sterujący
+  musi być pusty.</p>
+
+  <p class="bullet">• Katalog tymczasowy nie jest usuwany po
+  zakończeniu zadania.</p>
+
+  <p>W celu przekierowania plików wynikowych do katalogów na
+  podstawie wartości lub etykiet podziałów można określić wzorzec,
+  który będzie wykorzystywał wartości lub etykiety zmiennych
+  podziału. Odniesienia do zmiennych podziału należy tworzyć w
+  formie ${variable nazwa} w specyfikacji katalogu. Przykład: w
+  celu podziału wg zmiennej xvar, która ma wartości "a" i "b" napisz<br>
+  c:/target/x${xvar}<br>
+  to spowoduje zapisanie plików w /target/xa lub w /target/xb
+  odpowiednio do wartości xvar.</p>
+
+  <p>W razie potrzeby można użyć wielu odniesień do zmiennych. Katalogi będą tworzone w razie potrzeby. Są one tworzone tylko
+  dla rzeczywistych wartości znalezionych w danych. Mechanizm
+  szablonu wzorca może być również używany dla nazw plików.</p>
+
+  <p class="bullet">•Znaki niedozwolone w nazwach katalogów lub
+  plików, takie jak ", będą zastępowane znakiem podkreślenia (_).</p>
+
+  <p class="bullet">•Wyniki uzyskiwane w systemach plików, w
+  których w nazwach katalogów i plików rozróżniane są wielkości
+  liter, mogą się różnić od wyników uzyskiwanych w takich systemach,
+  jak Windows, w których takie rozróżnianie nie działa.</p>
+
+  <p><span class="runinhead">Usuń istniejące pliki SAV z katalogu
+  docelowego.</span> Jeśli używany jest katalog określony jawnie,
+  wówczas można usunąć wszystkie istniejące pliki SAV z katalogu
+  docelowego przed wygenerowaniem nowych plików. W ten sposób można
+  ograniczyć szum informacyjny i ułatwić przetwarzanie tych plików
+  jako grupy, ale należy uważnie sprawdzać, co będzie usuwane. W przypadku wzorców zawartość katalogów jest kasowana na potrzeby
+  wartości wzorców, jakie rzeczywiście pojawiają się w zbiorze danych.</p>
+
+  <p><span class="runinhead">Nazwy plików wynikowych.</span>
+  Domyślnie nazwy plików wynikowych będą tworzone
+  poprzez łączenie wartości lub etykiet wszystkich zmiennych
+  podziału, które będą rozdzielane znakami podkreślenia.
+  W celu zmiany tego sposobu działania można ustalić stałą nazwę
+  pliku lub wzorzec, taki jak opisany dla katalogów. Automatycznie
+  dodawane będzie rozszerzenie .sav.</p>
+
+  <p class="bullet">•Stałą nazwę pliku należy połączyć z
+  odpowiednim wzorcem katalogu - w przeciwnym wypadku wszystkie dane
+  zostaną zapisane w tym samym pliku.</p>
+
+  <p><span class="runinhead">Plik listingu wyjściowego.</span> Wprowadź specyfikację pliku, aby utworzyć plik, który będzie
+  zawierał listę wszystkich plików SAV utworzonych w wyniku tej komendy. Ta specyfikacja obejmuje pełną ścieżkę do pliku oraz wartość
+  podziału dla tego pliku. To ułatwia korzystanie z danych wynikowych
+  tej procedury w kolejnych operacjach przetwarzania zbioru plików,
+  a także na potrzeby rejestrowania. Plik jest zapisywany w kodowaniu
+  Unicode utf-8.</p>
+
+  <h2>Opcje</h2>W podrzędnym oknie dialogowym Opcje można określić
+  podstawę dla nazywania plików wynikowych oraz można określić, czy
+  lista plików będzie wyświetlana w oknie raportu
+
+  <p><span class="runinhead">Nazwy plików wynikowych.</span> Nazwy
+  plików mogą być generowane na trzy sposoby:</p>
+
+  <p class="bullet">• Przez wartości zmiennych podziału. Nazwy
+  plików mają formę np. <i>wartość1_wartość2</i>.sav, z dwiema
+  zmiennymi. Jeśli wartość jest systemowym brakiem, wówczas trzonem
+  nazwy będzie <i>$Sysmis</i>. W przypadku zmiennych łańcuchowych
+  wartość pusta powoduje wygenerowanie pliku o nazwie <i>.sav</i>. Jest to prawidłowa nazwa pliku, ale w niektórych systemach
+  operacyjnych nie będzie widoczna domyślnie w listingu katalogu. Jeśli stosowany jest wzorzec, wówczas wartości zmiennych są
+  podstawiane do wzorca.</p>
+
+  <p class="bullet">• Na podstawie etykiet wartości zmiennych
+  podziału.
+  Etykiety wartości dla wartości podziału są używane jako
+  trzon nazwy.
+  Jeśli etykieta nie jest dostępna, wówczas zamiast
+  niej stosowana jest wartość. Jeśli stosowany jest wzorzec,
+  wówczas wartości etykiet są podstawiane do wzorca.</p>
+
+  <p class="bullet">• Na podstawie kolejnego numeru. Trzony nazw
+  plików to liczby z zakresu od 0001 do największej wymaganej liczby. Ta opcja jest użyteczna, w sytuacji gdy nazwy powstałe po
+  zastosowaniu wartości lub etykiet są kłopotliwe. Ta opcja nie
+  może być stosowana, jeśli nazwa pliku jest określona.</p>
+
+  <p>Wszelkie znaki, które mogłyby być niepoprawne w nazwie pliku
+  na innym systemie operacyjnym, są zastępowane spacjami. Dotyczy
+  to znaków ", /, \,  &lt;, &gt;, * oraz ?.</p>
+
+  <p><span class="runinhead">Przedrostek nazwy.</span> Zaznacz to pole
+  wyboru, aby dołączyć tekst poniżej jako początek trzonu każdej
+  nazwy. Pozostała część nazwy będzie określona przez ustawienie
+  nazw plików wynikowych, a poszczególne segmenty będą rozdzielane
+  znakami podkreślenia.</p>
+
+  <p class="bullet">•Ta opcja nie może być używana z wzorcem.</p>
+
+  <p><span class="runinhead">Wyświetl listę zapisanych
+  plików.</span>
+  Zaznacz to pole wyboru, aby utworzyć w oknie raportu
+  listę zapisanych plików oraz powiązane wartości zmiennej podziału.</p>
+
+  <h2>Funkcje dodatkowe</h2>Uruchom komendę<br>
+  SPSSINC SPLIT DATASET /HELP.<br>
+  w celu wyświetlenia opisu całej składni. Przy użyciu tej komendy
+  można zapisać wynik w bieżącym katalogu roboczym procesora SPSS. Komenda SHOW DIRECTORY umożliwia wyświetlenie informacji o
+  konkretnym katalogu.
+
+  <p>Liczba operacji przekazywania danych, jaka jest wymagana do
+  wygenerowania plików SAV, jest zależna od wersji produktu IBM SPSS
+  Statistics. W przypadku wersji 17 jedna operacja przekazywania
+  danych umożliwia wygenerowanie 10 plików SAV. W późniejszych
+  wersjach możliwe jest wygenerowanie 64 plików na raz.</p>
+
+  <h2>Wymagania</h2>Ta komenda wymaga wtyczki Python
+  Programmability, którą można znaleźć na dysku instalacyjnym IBM
+  SPSS Statistics lub pobrać z serwisu SPSS Community pod adresem www.ibm.com/developerworks/spssdevcentral/.
+  <hr>
+
+  <p style="font-size:80%;">© Copyright IBM Corp. 1989, 2013</p>
+</body>
+</html>

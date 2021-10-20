@@ -1,154 +1,93 @@
-#/***********************************************************************
-# * Licensed Materials - Property of IBM 
-# *
-# * IBM SPSS Products: Statistics Common
-# *
-# * (C) Copyright IBM Corp. 1989, 2014
-# *
-# * US Government Users Restricted Rights - Use, duplication or disclosure
-# * restricted by GSA ADP Schedule Contract with IBM Corp. 
-# ************************************************************************/
-
-# NLS_ENCODING=UTF-8
-# IBMUPYTH
-
-
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR ORGANIZATION
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Translations template for PROJECT.
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
+
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-05-21 17:51+China Standard Time\n"
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-10-11 00:34-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: ENCODING\n"
-"Generated-By: pygettext.py 1.5\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Globalization Pipeline\n"
 
-
-#: SPSSINC_SPLIT_DATASET.py:291
 msgid "---"
-msgstr ""
-"---"
+msgstr "---"
 
-#: SPSSINC_SPLIT_DATASET.py:307
 msgid "FILENAME and NAMEPREFIX cannot be used together"
-msgstr ""
-"FILENAME 및 NAMEPREFIX를 함께 사용할 수 없습니다."
+msgstr "FILENAME 및 NAMEPREFIX를 함께 사용할 수 없습니다."
 
-#: SPSSINC_SPLIT_DATASET.py:309
 msgid "FILENAME and Names = Numbers cannot be used together"
-msgstr ""
-"FILENAME 및 Names = Numbers를 함께 사용할 수 없습니다."
+msgstr "FILENAME 및 Names = Numbers를 함께 사용할 수 없습니다."
 
-#: SPSSINC_SPLIT_DATASET.py:389
-msgid "One or more of the split variables was not found.  Note that names are case sensitive"
-msgstr ""
-"하나 이상의 분할 변수를 찾지 못했습니다. 이름은 대소문자를 구분합니다."
+msgid ""
+"One or more of the split variables was not found.  Note that names are case "
+msgstr "하나 이상의 분할 변수를 찾지 못했습니다. 이름은 대소문자를 구분합니다."
 
-#: SPSSINC_SPLIT_DATASET.py:403
 msgid "Split variable contains non-integer value: %f"
-msgstr ""
-"분할 변수에 정수 아닌 값이 포함되어 있습니다. %f"
+msgstr "분할 변수에 정수 아닌 값이 포함되어 있습니다. %f"
 
-#: SPSSINC_SPLIT_DATASET.py:451
 msgid "Split File Information"
-msgstr ""
-"파일 분할 정보"
+msgstr "파일 분할 정보"
 
-#: SPSSINC_SPLIT_DATASET.py:452
 msgid "Settings and Statistics"
-msgstr ""
-"설정 및 통계"
+msgstr "설정 및 통계"
 
-#: SPSSINC_SPLIT_DATASET.py:453
 msgid "Split Variable Names"
-msgstr ""
-"분할 변수 이름"
+msgstr "분할 변수 이름"
 
-#: SPSSINC_SPLIT_DATASET.py:454
 msgid "Output Directory"
-msgstr ""
-"출력 디렉토리"
+msgstr "출력 디렉토리"
 
-#: SPSSINC_SPLIT_DATASET.py:455
 msgid "Files Deleted"
-msgstr ""
-"삭제된 파일"
+msgstr "삭제된 파일"
 
-#: SPSSINC_SPLIT_DATASET.py:456
 msgid "Files Written"
-msgstr ""
-"기록된 파일"
+msgstr "기록된 파일"
 
-#: SPSSINC_SPLIT_DATASET.py:457
 msgid "File List"
-msgstr ""
-"파일 목록"
+msgstr "파일 목록"
 
-#: SPSSINC_SPLIT_DATASET.py:457
 msgid "None"
-msgstr ""
-"없음"
+msgstr "없음"
 
-#: SPSSINC_SPLIT_DATASET.py:458
 msgid "Directories Cleared"
-msgstr ""
-"지운 디렉토리"
+msgstr "지운 디렉토리"
 
-#: SPSSINC_SPLIT_DATASET.py:458
 msgid "No"
-msgstr ""
-"아니오"
+msgstr "아니오"
 
-#: SPSSINC_SPLIT_DATASET.py:458
 msgid "Yes"
-msgstr ""
-"예"
+msgstr "예"
 
-#: SPSSINC_SPLIT_DATASET.py:462
 msgid "Split Files Written"
-msgstr ""
-"기록된 분할 파일"
+msgstr "기록된 분할 파일"
 
-#: SPSSINC_SPLIT_DATASET.py:463
 msgid "Values and File Names for Split Files Written"
-msgstr ""
-"기록된 분할 파일에 대한 값 및 파일 이름"
+msgstr "기록된 분할 파일에 대한 값 및 파일 이름"
 
-#: SPSSINC_SPLIT_DATASET.py:464
 msgid "Data File"
-msgstr ""
-"데이터 파일"
+msgstr "데이터 파일"
 
-#: SPSSINC_SPLIT_DATASET.py:464
 msgid "Directory"
-msgstr ""
-"디렉토리"
+msgstr "디렉토리"
 
-#: SPSSINC_SPLIT_DATASET.py:464
 msgid "Values or Labels"
-msgstr ""
-"값 또는 레이블"
+msgstr "값 또는 레이블"
 
-#: SPSSINC_SPLIT_DATASET.py:465
 msgid "Based on Variables: %s"
-msgstr ""
-"변수 기준: %s"
+msgstr "변수 기준: %s"
 
-#: SPSSINC_SPLIT_DATASET.py:504
-msgid "A variable reference was found in a directory or file name pattern that is not listed as a split variable: %s"
-msgstr ""
-"분할 변수로 나열되지 않은 디렉토리 또는 파일 이름 패턴에서 변수 참조를 찾지 못했습니다. %s"
+msgid ""
+"A variable reference was found in a directory or file name pattern that is not"
+" listed as a split variable: %s"
+msgstr "분할 변수로 나열되지 않은 디렉토리 또는 파일 이름 패턴에서 변수 참조를 찾지 못했습니다. %s"
 
-#: SPSSINC_SPLIT_DATASET.py:643
 msgid "Relative paths cannot be specified with a drive letter: %s"
-msgstr ""
-"드라이브 이름과 함께 상대 경로를 지정할 수 없습니다. %s"
-
-
-
+msgstr "드라이브 이름과 함께 상대 경로를 지정할 수 없습니다. %s"

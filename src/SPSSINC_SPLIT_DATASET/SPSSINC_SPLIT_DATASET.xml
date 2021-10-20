@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Extension xmlns="http://spss.com/clementine/extensions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" debug="false" version="1.0" xsi:schemaLocation="http://spss.com/clementine/extensions http://xml.spss.com/clementine/extensions/CLEFSpecificationFile.xsd">
+	<ExtensionDetails copyright="Licensed Materials - Property of IBM.  IBM SPSS Products: Statistics Common (C) Copyright IBM Corp. 1989, 2013.  US Government Users Restricted Rights - Use, duplication or  disclosure restricted by GSA ADP Schedule Contract with IBM Corp." description="" id="SPSSINC_SPLIT_DATASET" label="" provider="SPSS, Inc." providerTag="spss" version="1.0"/>
+	<Resources>
+		<Bundle id="bundle1" path="SPSSINC_SPLIT_DATASET" type="properties"/>
+	</Resources>
+	<CommonObjects>
+		<Actions>
+			<Action id="SPSSINC_SPLIT_DATASET_action" imagePath="IBMdialogicon.png" label="Split into Files" labelKey="SPSSINC_SPLIT_DATASET_action.LABEL"/>
+		</Actions>
+	</CommonObjects>
+	<UserInterface>
+		<Controls>
+			<MenuItem action="SPSSINC_SPLIT_DATASET_action" offset="21" showIcon="true" spssMenu="Data"/>
+		</Controls>
+	</UserInterface>
+	<Node id="SPSSINC_SPLIT_DATASET" label="Split Dataset into Separate Files" labelKey="SPSSINC_SPLIT_DATASET.LABEL" type="modelBuilder">
+		<Properties>
+			<Property name="SPSSINC_SPLIT_DATASET" syntax="SPSSINC SPLIT DATASET %%splitvar%%&#10;/OUTPUT %%output%% %%directory%% %%deletecontents%% %%filename%%&#10;/OPTIONS %%filenames%% %%nameprefix%% %%PRINTLIST%%&#10;%%FILELIST%%"/>
+			<Property description="false" name="SPSSINC_SPLIT_DATASET_modal"/>
+			<Property description="" descriptionKey="source_vars_tooltip.LABEL" isList="true" label="Variables:" labelKey="source_vars.LABEL" name="source_vars" selectionPool="source_fields" syntax="%%ThisValue%%" valueType="field"/>
+			<Property description="Variable used to split cases.  Must be categorical." descriptionKey="splitvar_tooltip.LABEL" isList="true" isRequired="true" label="Split Cases by:" labelKey="splitvar.LABEL" name="splitvar" selectionPool="source_fields" syntax="SPLITVAR=%%ThisValue%%" valueType="field"/>
+			<Property defaultValue="" description="Output files will be written here.  See help for specifying patterns." descriptionKey="directory_tooltip.LABEL" directory_filter="All File Types (*.*)|*.*|A^" label="Output File Directory:" labelKey="directory.LABEL" name="directory" syntax="%%ThisValue%%" valueType="string"/>
+			<Property FILELIST_filter="All File Types (*.*)|*.*|A^" defaultValue="" description="You can specify a file that will contain a list of the files written and their split value" descriptionKey="FILELIST_tooltip.LABEL" label="Output Listing File:" labelKey="FILELIST.LABEL" name="FILELIST" syntax="FILELIST=%%ThisValue%%" valueType="string"/>
+			<Property defaultValue="values" description="" descriptionKey="filenames_tooltip.LABEL" label="Output File Names" labelKey="filenames.LABEL" name="filenames" syntax="NAMES=%%ThisValue%%" valueType="enum">
+				<Enumeration>
+					<Enum description="Make values into filenames" descriptionKey="values_tooltip.LABEL" hasSubGroup="false" label="Based on split variable values" labelKey="values.LABEL" mnemonic="V" mnemonicKey="values_mnemonic.VALUE" syntax="VALUES" value="values"/>
+					<Enum description="Make value labels into file names if available" descriptionKey="labels_tooltip.LABEL" hasSubGroup="false" label="Based on split variable value labels" labelKey="labels.LABEL" mnemonic="L" mnemonicKey="labels_mnemonic.VALUE" syntax="LABELS" value="labels"/>
+					<Enum description="Number the files" descriptionKey="numbers_tooltip.LABEL" hasSubGroup="false" label="Sequentially numbered" labelKey="numbers.LABEL" mnemonic="N" mnemonicKey="numbers_mnemonic.VALUE" syntax="NUMBERS" value="numbers"/>
+				</Enumeration>
+			</Property>
+			<Property description="" descriptionKey="nameprefix_tooltip.LABEL" label="Name Prefix" labelKey="nameprefix.LABEL" name="nameprefix" syntax="%%ThisValue%%"/>
+			<Property defaultValue="false" description="" descriptionKey="item_24_tooltip.LABEL" label="Use text as first part of file name" labelKey="item_24.LABEL" name="item_24" syntax="NAMEPREFIX=&quot;%%ThisValue%%&quot;±" valueType="boolean"/>
+			<Property defaultValue="" description="" descriptionKey="nametext_tooltip.LABEL" label="Prefix text:" labelKey="nametext.LABEL" name="nametext" syntax="%%ThisValue%%" valueType="string"/>
+			<Property defaultValue="false" description="" descriptionKey="PRINTLIST_tooltip.LABEL" label="Display list of  files written" labelKey="PRINTLIST.LABEL" name="PRINTLIST" syntax="PRINTLIST=YES±" valueType="boolean"/>
+			<Property defaultValue="false" description="Remove all the SPSS sav files from the target directories before generating the output" descriptionKey="deletecontents_tooltip.LABEL" label="Delete existing sav files from target directories\n(careful!)" labelKey="deletecontents.LABEL" name="deletecontents" syntax="DELETECONTENTS=YES±DELETECONTENTS=NO" valueType="boolean"/>
+			<Property defaultValue="filedirectory" description="" descriptionKey="output_tooltip.LABEL" label="Output Location:" labelKey="output.LABEL" name="output" syntax="%%ThisValue%%" valueType="enum">
+				<Enumeration>
+					<Enum description="Specify a directory for the output below" descriptionKey="filedirectory_tooltip.LABEL" hasSubGroup="false" label="Write output files to indicated directory (choose below)" labelKey="filedirectory.LABEL" mnemonic="D" mnemonicKey="filedirectory_mnemonic.VALUE" syntax="DIRECTORY=" value="filedirectory"/>
+					<Enum description="A new temporary directory will be created.  Leave the directory field empty." descriptionKey="tempfile_tooltip.LABEL" hasSubGroup="false" label="Write output to a new temporary directory" labelKey="tempfile.LABEL" mnemonic="T" mnemonicKey="tempfile_mnemonic.VALUE" syntax="MAKETEMPDIR=YES" value="tempfile"/>
+				</Enumeration>
+			</Property>
+			<Property defaultValue="" description="See help for specifying patterns in names" descriptionKey="filename_tooltip.LABEL" label="Output File Names:" labelKey="filename.LABEL" name="filename" syntax="FILENAME=&quot;%%ThisValue%%&quot;" valueType="string"/>
+		</Properties>
+		<SelectionPool id="source_fields" type="fields"/>
+		<UserInterface>
+			<Tabs>
+				<Tab helpLink="SPSSINC_SPLIT_DATASET.htm">
+					<PropertiesPanel>
+						<SourceFieldsBrowser copyFields="false" mnemonic="V" mnemonicKey="source_vars_mnemonic.VALUE" property="source_vars" selectionPool="source_fields" storage="[real integer date time string]" types="[set orderedSet]">
+							<Layout columnWeight="1.0" fill="both" gridColumn="0" gridRow="0" gridWidth="1" rowWeight="1.0"/>
+						</SourceFieldsBrowser>
+						<MultiFieldChooserControl mnemonic="S" mnemonicKey="splitvar_mnemonic.VALUE" property="splitvar" storage="[real integer date time string]">
+							<Layout columnWeight="1.0" fill="both" gridColumn="2" gridRow="0" gridWidth="1" rowWeight="1.0"/>
+						</MultiFieldChooserControl>
+						<StaticText text="Numeric variables must have integer values" textKey="item_5.LABEL">
+							<Layout columnWeight="1.0" fill="none" gridColumn="2" gridRow="1" gridWidth="1" rowWeight="0.0"/>
+						</StaticText>
+						<ServerDirectoryChooserControl mnemonic="F" mnemonicKey="directory_mnemonic.VALUE" mode="save" property="directory">
+							<Layout columnWeight="1.0" fill="horizontal" gridColumn="2" gridRow="3" gridWidth="1" rowWeight="0.0"/>
+						</ServerDirectoryChooserControl>
+						<ServerFileChooserControl mnemonic="L" mnemonicKey="FILELIST_mnemonic.VALUE" mode="save" property="FILELIST">
+							<Layout columnWeight="1.0" fill="horizontal" gridColumn="2" gridRow="6" gridWidth="1" rowWeight="0.0"/>
+						</ServerFileChooserControl>
+						<PropertiesSubPanel buttonLabel="Options..." buttonLabelKey="options.LABEL" dialogTitle="Options" dialogTitleKey="dialog2.TITLE" helpLink="" mnemonic="O" mnemonicKey="options_mnemonic.VALUE">
+							<Layout columnWeight="0.0" fill="none" gridColumn="3" gridRow="0" gridWidth="1" rowWeight="0.0"/>
+							<PropertiesPanel>
+								<RadioButtonGroupControl property="filenames" rows="3" useSubPanel="false">
+									<Layout columnWeight="1.0" fill="both" gridColumn="0" gridRow="0" gridWidth="1" rowWeight="1.0"/>
+									<RadioButton property="values"/>
+									<RadioButton property="labels"/>
+									<RadioButton property="numbers"/>
+								</RadioButtonGroupControl>
+								<PropertiesPanel id="nameprefix" label="Name Prefix" labelKey="nameprefix.LABEL">
+									<Layout columnWeight="1.0" fill="both" gridColumn="0" gridRow="1" gridWidth="1" rowWeight="1.0"/>
+									<CheckBoxControl labelAbove="true" mnemonic="U" mnemonicKey="item_24_mnemonic.VALUE" property="item_24">
+										<Layout columnWeight="1.0" fill="none" gridColumn="0" gridRow="0" gridWidth="1" rowWeight="0.0"/>
+									</CheckBoxControl>
+									<TextBoxControl mnemonic="P" mnemonicKey="nametext_mnemonic.VALUE" property="nametext">
+										<Layout columnWeight="1.0" fill="horizontal" gridColumn="0" gridRow="1" gridWidth="1" leftIndent="8" rowWeight="1.0"/>
+									</TextBoxControl>
+								</PropertiesPanel>
+								<CheckBoxControl mnemonic="D" mnemonicKey="PRINTLIST_mnemonic.VALUE" property="PRINTLIST">
+									<Layout columnWeight="1.0" fill="none" gridColumn="0" gridRow="3" gridWidth="1" rowWeight="0.0"/>
+								</CheckBoxControl>
+								<StaticText text="The sequentially numbered  and name prefix options\ncannot be combined with a file name specification." textKey="item_76.LABEL">
+									<Layout columnWeight="1.0" fill="none" gridColumn="0" gridRow="2" gridWidth="1" rowWeight="0.0"/>
+								</StaticText>
+							</PropertiesPanel>
+						</PropertiesSubPanel>
+						<StaticText text="This dialog requires the Python\nprogrammability plug-in" textKey="item_48.LABEL">
+							<Layout columnWeight="1.0" fill="none" gridColumn="0" gridRow="1" gridWidth="1" rowWeight="0.0"/>
+						</StaticText>
+						<CheckBoxControl mnemonic="A" mnemonicKey="deletecontents_mnemonic.VALUE" property="deletecontents">
+							<Layout columnWeight="1.0" fill="none" gridColumn="2" gridRow="4" gridWidth="1" rowWeight="0.0"/>
+						</CheckBoxControl>
+						<RadioButtonGroupControl property="output" rows="2" useSubPanel="false">
+							<Layout columnWeight="1.0" fill="both" gridColumn="2" gridRow="2" gridWidth="1" rowWeight="1.0"/>
+							<RadioButton property="filedirectory"/>
+							<RadioButton property="tempfile"/>
+						</RadioButtonGroupControl>
+						<TextBoxControl mnemonic="N" mnemonicKey="filename_mnemonic.VALUE" property="filename">
+							<Layout columnWeight="1.0" fill="horizontal" gridColumn="2" gridRow="5" gridWidth="1" rowWeight="0.0"/>
+						</TextBoxControl>
+						<StaticText text="This dialog was created using a later version of PASW Statistics\nand certain features may not function as intended." textKey="v17_warning.LABEL">
+							<Layout columnWeight="1.0" fill="horizontal" gridColumn="0" gridRow="2" gridWidth="1" rowWeight="1.0"/>
+						</StaticText>
+					</PropertiesPanel>
+				</Tab>
+			</Tabs>
+		</UserInterface>
+	</Node>
+</Extension>
