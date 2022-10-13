@@ -1,4 +1,5 @@
 Name: SPSSINC SPLIT DATASET
+Display-Name: Split Dataset Into Separate Files
 Dialog-Specs: SPSSINC_SPLIT_DATASET.spd
 Command-Specs: SPSSINC_SPLIT_DATASET.xml
 Code-Files: SPSSINC_SPLIT_DATASET.py
